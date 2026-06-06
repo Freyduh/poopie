@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eBay Stream Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bangers&family=Bebas+Neue&family=Black+Han+Sans&family=Boogaloo&family=Chakra+Petch:wght@700&family=Changa:wght@800&family=Cinzel:wght@900&family=Dela+Gothic+One&family=DM+Serif+Display&family=Exo+2:wght@900&family=Fjalla+One&family=Fredoka:wght@700&family=Fugaz+One&family=Graduate&family=Gravitas+One&family=Impact&family=Josefin+Sans:wght@700&family=Kanit:wght@800&family=Knewave&family=Lalezar&family=Lato:wght@900&family=League+Gothic&family=Lexend+Deca:wght@900&family=Lilita+One&family=Lobster&family=Montserrat:wght@900&family=Noto+Sans:wght@900&family=Nunito:wght@900&family=Open+Sans:wght@800&family=Orbitron:wght@900&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:wght@900&family=Poppins:wght@900&family=Rajdhani:wght@700&family=Raleway:wght@900&family=Righteous&family=Roboto+Condensed:wght@900&family=Rock+Salt&family=Rubik:wght@900&family=Russo+One&family=Saira+Condensed:wght@900&family=Sansita:wght@900&family=Satisfy&family=Secular+One&family=Sigmar+One&family=Space+Grotesk:wght@700&family=Squada+One&family=Teko:wght@700&family=Titan+One&family=Tourney:wght@900&family=Ubuntu:wght@700&family=Ultra&family=Unbounded:wght@900&family=Varela+Round&family=Yanone+Kaffeesatz:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --panel:#1a1a2e; --panel2:#16213e; --accent:#e63946; --gold:#f4a261; --text:#edf2f4; --muted:#8d99ae; --border:#2d3561; }
+  body { background:#0d0d1a; color:var(--text); font-family:'Segoe UI',sans-serif; display:flex; height:100vh; overflow:hidden; }
+
+  #sidebar { width:290px; min-width:290px; background:var(--panel); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow-y:auto; z-index:10; }
+  #sidebar::-webkit-scrollbar { width:4px; }
+  #sidebar::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+  .sidebar-logo { padding:16px 20px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .logo-badge { width:32px; height:32px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff; flex-shrink:0; }
+  .sidebar-logo span { font-size:14px; font-weight:700; letter-spacing:.5px; }
+  .sidebar-logo small { display:block; font-size:10px; color:var(--muted); }
+
+  .section-label { padding:12px 20px 6px; font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--muted); text-transform:uppercase; }
+
+  .add-btn { margin:3px 10px; padding:9px 12px; background:var(--panel2); border:1px solid var(--border); border-radius:8px; color:var(--text); cursor:pointer; display:flex; align-items:center; gap:10px; font-size:12px; transition:all .15s; user-select:none; width:calc(100% - 20px); text-align:left; }
+  .add-btn:hover { background:#1f2e52; border-color:var(--accent); }
+  .add-btn .btn-icon { width:26px; height:26px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  .add-btn .btn-label { font-weight:600; font-size:12px; }
+  .add-btn .btn-sub { font-size:10px; color:var(--muted); display:block; }
+
+  #props-panel { margin:6px 10px; padding:12px; background:var(--panel2); border:1px solid var(--border); border-radius:10px; display:none; }
+  #props-panel.visible { display:block; }
+  #props-title { font-size:11px; font-weight:700; color:var(--gold); margin-bottom:10px; letter-spacing:.5px; }
+  .prop-row { margin-bottom:8px; }
+  .prop-row label { font-size:10px; color:var(--muted); display:block; margin-bottom:3px; }
+  .prop-row input[type="text"], .prop-row input[type="number"], .prop-row select, .prop-row textarea { width:100%; background:#0d0d1a; border:1px solid var(--border); color:var(--text); padding:5px 8px; border-radius:5px; font-size:11px; outline:none; }
+  .prop-row input[type="color"] { width:100%; height:30px; border:1px solid var(--border); background:#0d0d1a; border-radius:5px; cursor:pointer; padding:2px; }
+  .prop-row textarea { resize:vertical; min-height:44px; font-family:inherit; }
+  .prop-row input[type="range"] { width:100%; accent-color:var(--accent); }
+  .prop-row .range-val { font-size:10px; color:var(--accent); float:right; }
+  .prop-row input:focus, .prop-row textarea:focus, .prop-row select:focus { border-color:var(--accent) !important; }
+
+  /* FONT PICKER */
+  .font-picker-wrap { position:relative; }
+  .font-search { width:100%; background:#0d0d1a; border:1px solid var(--border); color:var(--text); padding:5px 8px; border-radius:5px 5px 0 0; font-size:11px; outline:none; }
+  .font-search:focus { border-color:var(--accent); }
+  .font-dropdown { display:none; position:absolute; top:100%; left:0; right:0; background:#0d0d1a; border:1px solid var(--accent); border-top:none; border-radius:0 0 6px 6px; max-height:200px; overflow-y:auto; z-index:200; }
+  .font-dropdown.open { display:block; }
+  .font-option { padding:7px 10px; cursor:pointer; font-size:13px; border-bottom:1px solid var(--border); transition:.1s; display:flex; align-items:center; justify-content:space-between; }
+  .font-option:hover, .font-option.active { background:rgba(230,57,70,.15); color:var(--accent); }
+  .font-option .font-preview { font-size:15px; color:var(--text); }
+  .font-size-row { display:flex; align-items:center; gap:8px; }
+  .font-size-row input[type="range"] { flex:1; }
+  .font-size-val { font-size:11px; color:var(--accent); min-width:38px; text-align:right; }
+
+  /* FONT CATEGORY TABS */
+  .font-cats { display:flex; gap:3px; flex-wrap:wrap; margin-bottom:6px; }
+  .font-cat { padding:3px 8px; border-radius:4px; font-size:9px; font-weight:700; cursor:pointer; background:var(--panel); border:1px solid var(--border); color:var(--muted); letter-spacing:.5px; }
+  .font-cat.active { background:rgba(230,57,70,.2); border-color:var(--accent); color:var(--accent); }
+
+  .img-upload-zone { border:2px dashed var(--border); border-radius:8px; padding:12px; text-align:center; cursor:pointer; transition:.15s; position:relative; overflow:hidden; }
+  .img-upload-zone:hover { border-color:var(--accent); background:rgba(230,57,70,.06); }
+  .img-upload-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .img-upload-zone .upload-icon { font-size:22px; display:block; margin-bottom:4px; }
+  .img-upload-zone .upload-text { font-size:10px; color:var(--muted); }
+  .img-preview { width:100%; height:70px; object-fit:cover; border-radius:5px; margin-top:6px; display:none; border:1px solid var(--border); }
+  .img-preview.visible { display:block; }
+  .img-clear-btn { font-size:10px; color:var(--accent); cursor:pointer; display:none; margin-top:4px; }
+  .img-clear-btn.visible { display:inline-block; }
+
+  .color-row { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+  .color-swatch { width:22px; height:22px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform .1s; flex-shrink:0; }
+  .color-swatch:hover { transform:scale(1.2); }
+  .color-swatch.active { border-color:#fff; }
+
+  .prop-btn { width:100%; padding:7px; background:var(--accent); border:none; border-radius:5px; color:#fff; font-size:11px; font-weight:700; cursor:pointer; margin-top:3px; }
+  .prop-btn.secondary { background:transparent; border:1px solid var(--border); color:var(--muted); }
+  .prop-btn.danger { background:#7d1b1b; }
+  .prop-btn:hover { opacity:.85; }
+
+  .ticker-settings { margin:6px 10px; padding:12px; background:var(--panel2); border:1px solid var(--border); border-radius:10px; }
+  .ticker-settings h4 { font-size:10px; color:var(--gold); font-weight:700; margin-bottom:8px; }
+  .sep { height:1px; background:var(--border); margin:6px 10px; }
+
+  .dl-section { margin:6px 10px 14px; }
+  .dl-btn { width:100%; padding:10px; border-radius:7px; border:none; font-size:12px; font-weight:700; cursor:pointer; margin-bottom:5px; display:flex; align-items:center; justify-content:center; gap:7px; transition:.15s; }
+  .dl-btn.primary { background:linear-gradient(135deg,#e63946,#c1121f); color:#fff; }
+  .dl-btn.gold { background:linear-gradient(135deg,#f4a261,#e76f51); color:#1a1a2e; }
+  .dl-btn:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.35); }
+
+  #main { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:16px; overflow:auto; background:#0d0d1a; }
+  .canvas-label { font-size:10px; color:var(--muted); margin-bottom:8px; letter-spacing:1px; }
+  #canvas-wrap { position:relative; transform-origin:top center; }
+
+  #stream-canvas { width:1080px; height:1920px; background:#111; position:relative; overflow:hidden; cursor:default; }
+  #grid-overlay { position:absolute; inset:0; z-index:1; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); background-size:60px 60px; display:none; }
+  #grid-overlay.visible { display:block; }
+
+  .stream-el { position:absolute; z-index:5; user-select:none; cursor:move; }
+  .stream-el.selected .el-inner { outline:2px solid #fff; outline-offset:2px; }
+  .stream-el:hover .el-controls { opacity:1; }
+  .stream-el.selected .el-controls { opacity:1; }
+  .el-inner { width:100%; height:100%; position:relative; overflow:hidden; }
+
+  .el-controls { position:absolute; inset:-8px; pointer-events:none; opacity:0; transition:opacity .15s; z-index:10; }
+  .resize-handle { position:absolute; width:13px; height:13px; background:#fff; border:2px solid #333; border-radius:3px; pointer-events:all; z-index:11; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+  .rh-nw{top:0;left:0;cursor:nw-resize} .rh-ne{top:0;right:0;cursor:ne-resize}
+  .rh-sw{bottom:0;left:0;cursor:sw-resize} .rh-se{bottom:0;right:0;cursor:se-resize}
+  .rh-n{top:0;left:50%;transform:translateX(-50%);cursor:n-resize}
+  .rh-s{bottom:0;left:50%;transform:translateX(-50%);cursor:s-resize}
+  .rh-w{top:50%;left:0;transform:translateY(-50%);cursor:w-resize}
+  .rh-e{top:50%;right:0;transform:translateY(-50%);cursor:e-resize}
+  .el-delete { position:absolute; top:-10px; right:-10px; width:20px; height:20px; background:var(--accent); color:#fff; border:none; border-radius:50%; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:12; pointer-events:all; }
+
+  .cam-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+  .cam-icon { font-size:56px; opacity:.25; }
+  .cam-text { font-size:16px; color:rgba(255,255,255,.3); font-weight:700; letter-spacing:2px; }
+  .cam-bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .cam-label { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.65); padding:8px 14px; text-align:center; backdrop-filter:blur(4px); z-index:2; }
+
+  .el-type-image .el-inner { display:flex; align-items:center; justify-content:center; }
+  .el-type-image .img-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:.35; font-size:14px; color:#fff; }
+  .el-type-image .img-placeholder span { font-size:40px; }
+
+  .el-type-ad .el-inner { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:20px; text-align:center; }
+  .ad-tag { font-size:13px; font-weight:800; letter-spacing:2px; opacity:.7; text-transform:uppercase; }
+  .ad-badge { padding:8px 22px; border-radius:30px; font-size:16px; font-weight:800; }
+
+  .el-type-text .el-inner { display:flex; align-items:center; justify-content:center; padding:12px; }
+  .el-type-logo .el-inner { display:flex; align-items:center; justify-content:center; gap:14px; padding:16px; }
+  .el-type-frame .el-inner { display:flex; align-items:center; justify-content:center; }
+
+  #ticker-bar { position:absolute; bottom:0; left:0; right:0; height:36px; z-index:50; display:flex; align-items:center; overflow:hidden; border-top:3px solid var(--accent); }
+  #ticker-label { background:var(--accent); color:#fff; padding:0 16px; font-size:14px; font-weight:900; white-space:nowrap; height:100%; display:flex; align-items:center; flex-shrink:0; letter-spacing:1px; z-index:2; }
+  #ticker-track { flex:1; overflow:hidden; position:relative; height:100%; }
+  #ticker-inner { position:absolute; white-space:nowrap; display:flex; align-items:center; height:100%; animation:ticker-scroll 30s linear infinite; font-size:15px; font-weight:600; padding-left:30px; }
+  @keyframes ticker-scroll { 0%{transform:translateX(1080px)} 100%{transform:translateX(-100%)} }
+  @keyframes ticker-scroll-right { 0%{transform:translateX(-100%)} 100%{transform:translateX(1080px)} }
+
+  .tool-btn { padding:7px 12px; background:var(--panel); border:1px solid var(--border); color:var(--text); border-radius:7px; font-size:11px; cursor:pointer; font-weight:600; }
+  .tool-btn:hover { background:var(--panel2); }
+  .tool-btn.active { border-color:var(--accent); color:var(--accent); }
+
+  .fit-row { display:flex; gap:4px; }
+  .fit-btn { flex:1; padding:4px; background:var(--panel); border:1px solid var(--border); color:var(--muted); border-radius:4px; font-size:10px; cursor:pointer; text-align:center; }
+  .fit-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(230,57,70,.1); }
+
+  /* SNAP LINES */
+  .snap-line { position:absolute; pointer-events:none; z-index:999; }
+  .snap-line.h { left:0; right:0; height:1px; background:#00e5ff; box-shadow:0 0 4px #00e5ff; }
+  .snap-line.v { top:0; bottom:0; width:1px; background:#00e5ff; box-shadow:0 0 4px #00e5ff; }
+  .snap-line.center-h { background:#ff9800; box-shadow:0 0 4px #ff9800; }
+  .snap-line.center-v { background:#ff9800; box-shadow:0 0 4px #ff9800; }
+
+  .snap-indicator { position:absolute; background:#00e5ff; color:#000; font-size:9px; font-weight:800;
+    padding:2px 5px; border-radius:3px; pointer-events:none; z-index:1000; white-space:nowrap; }
+
+  #main::-webkit-scrollbar { width:5px; height:5px; }
+  #main::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  .font-dropdown::-webkit-scrollbar { width:4px; }
+  .font-dropdown::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge">🔴</div>
+    <div><span>Stream Builder</span><small>eBay Live · 1080 × 1920</small></div>
+  </div>
+
+  <div class="section-label">Add Elements</div>
+  <button class="add-btn" onclick="addElement('cam')"><div class="btn-icon" style="background:#1d3a5f;">📷</div><div><div class="btn-label">Camera Area</div><span class="btn-sub">Drag zone + upload image/feed</span></div></button>
+  <button class="add-btn" onclick="addElement('image')"><div class="btn-icon" style="background:#1a3a2a;">🖼️</div><div><div class="btn-label">Image / Photo</div><span class="btn-sub">Product photo, graphic, banner</span></div></button>
+  <button class="add-btn" onclick="addElement('ad')"><div class="btn-icon" style="background:#1d3a1d;">💰</div><div><div class="btn-label">Ad / Promo Block</div><span class="btn-sub">Price, deal, offer banner</span></div></button>
+  <button class="add-btn" onclick="addElement('frame')"><div class="btn-icon" style="background:#3a1d1d;">🟥</div><div><div class="btn-label">Bold Frame</div><span class="btn-sub">Thick colored border overlay</span></div></button>
+  <button class="add-btn" onclick="addElement('text')"><div class="btn-icon" style="background:#3a2d1d;">✏️</div><div><div class="btn-label">Text Block</div><span class="btn-sub">Title, label, overlay text</span></div></button>
+  <button class="add-btn" onclick="addElement('logo')"><div class="btn-icon" style="background:#2d1d3a;">⭐</div><div><div class="btn-label">Logo / Brand</div><span class="btn-sub">Store name & badge</span></div></button>
+
+  <div class="sep"></div>
+  <div class="section-label">Ticker / Crawl</div>
+  <div class="ticker-settings">
+    <h4>🎞 BOTTOM TICKER</h4>
+
+    <!-- TEXT CONTENT -->
+    <div class="prop-row">
+      <label>Crawl Text</label>
+      <textarea id="ticker-text" oninput="updateTicker()" style="min-height:54px;">🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out!</textarea>
+    </div>
+    <div class="prop-row">
+      <label>Label Tag</label>
+      <input type="text" id="ticker-label-text" value="LIVE" oninput="updateTicker()">
+    </div>
+    <div class="prop-row">
+      <label>Separator between repeats</label>
+      <input type="text" id="ticker-separator" value="  ·  " oninput="updateTicker()">
+    </div>
+
+    <!-- FONT -->
+    <div class="prop-row">
+      <label>Ticker Font</label>
+      <div class="ticker-font-cats" style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px;">
+        <div class="font-cat active" onclick="filterTickerFonts('all',this)">All</div>
+        <div class="font-cat" onclick="filterTickerFonts('bold',this)">Bold</div>
+        <div class="font-cat" onclick="filterTickerFonts('display',this)">Display</div>
+        <div class="font-cat" onclick="filterTickerFonts('clean',this)">Clean</div>
+        <div class="font-cat" onclick="filterTickerFonts('fun',this)">Fun</div>
+        <div class="font-cat" onclick="filterTickerFonts('retro',this)">Retro</div>
+      </div>
+      <div style="position:relative;">
+        <input type="text" id="ticker-font-search" placeholder="Search fonts..." class="font-search" style="border-radius:5px 5px 0 0;" oninput="filterTickerFontSearch(this.value)" onfocus="openTickerFontDd()" onblur="closeTickerFontDdDelayed()">
+        <div id="ticker-font-dropdown" class="font-dropdown"></div>
+      </div>
+      <div id="ticker-font-preview" style="margin-top:5px;padding:7px 10px;background:#0d0d1a;border-radius:5px;border:1px solid var(--border);font-size:14px;color:var(--text);">Bebas Neue — Aa Bb 123</div>
+    </div>
+    <input type="hidden" id="ticker-font" value="Bebas Neue">
+
+    <!-- FONT SIZE & WEIGHT -->
+    <div class="prop-row">
+      <label>Font Size <span class="range-val" id="ticker-fontsize-val">15px</span></label>
+      <input type="range" id="ticker-fontsize" min="10" max="60" value="15" oninput="updateTicker()">
+    </div>
+    <div class="prop-row">
+      <label>Font Weight</label>
+      <select id="ticker-fontweight" onchange="updateTicker()">
+        <option value="400">Regular</option>
+        <option value="600">Semi Bold</option>
+        <option value="700" selected>Bold</option>
+        <option value="800">Extra Bold</option>
+        <option value="900">Black</option>
+      </select>
+    </div>
+    <div class="prop-row">
+      <label>Letter Spacing <span class="range-val" id="ticker-spacing-val">0px</span></label>
+      <input type="range" id="ticker-spacing" min="-2" max="10" value="0" step="0.5" oninput="updateTicker()">
+    </div>
+    <div class="prop-row">
+      <label>Text Transform</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="tt-none" onclick="setTickerTransform('none',this)">Normal</div>
+        <div class="fit-btn" id="tt-upper" onclick="setTickerTransform('uppercase',this)">UPPER</div>
+        <div class="fit-btn" id="tt-lower" onclick="setTickerTransform('lowercase',this)">lower</div>
+      </div>
+    </div>
+
+    <!-- COLORS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="prop-row" style="margin:0;">
+        <label>Text Color</label>
+        <input type="color" id="ticker-text-color" value="#ffffff" oninput="updateTicker()">
+      </div>
+      <div class="prop-row" style="margin:0;">
+        <label>Background</label>
+        <input type="color" id="ticker-bg-color" value="#000000" oninput="updateTicker()">
+      </div>
+    </div>
+    <div style="margin-top:6px;">
+      <label style="font-size:10px;color:var(--muted);display:block;margin-bottom:3px;">Quick text colors</label>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <div class="color-swatch" style="background:#ffffff;border:1px solid #444" onclick="setTickerTextColor('#ffffff')"></div>
+        <div class="color-swatch" style="background:#ffd166" onclick="setTickerTextColor('#ffd166')"></div>
+        <div class="color-swatch" style="background:#f4a261" onclick="setTickerTextColor('#f4a261')"></div>
+        <div class="color-swatch" style="background:#06d6a0" onclick="setTickerTextColor('#06d6a0')"></div>
+        <div class="color-swatch" style="background:#3a86ff" onclick="setTickerTextColor('#3a86ff')"></div>
+        <div class="color-swatch" style="background:#e63946" onclick="setTickerTextColor('#e63946')"></div>
+        <div class="color-swatch" style="background:#000000;border:1px solid #555" onclick="setTickerTextColor('#000000')"></div>
+      </div>
+    </div>
+
+    <!-- LABEL BADGE -->
+    <div class="sep" style="margin:8px 0;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="prop-row" style="margin:0;">
+        <label>Label BG</label>
+        <input type="color" id="ticker-label-color" value="#e63946" oninput="updateTicker()">
+      </div>
+      <div class="prop-row" style="margin:0;">
+        <label>Label Text</label>
+        <input type="color" id="ticker-label-text-color" value="#ffffff" oninput="updateTicker()">
+      </div>
+    </div>
+    <div class="prop-row" style="margin-top:6px;">
+      <label>Label Font Size <span class="range-val" id="ticker-label-fontsize-val">14px</span></label>
+      <input type="range" id="ticker-label-fontsize" min="8" max="40" value="14" oninput="updateTicker()">
+    </div>
+    <div class="prop-row">
+      <label>Label Style</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="ls-rect" onclick="setLabelStyle('rect',this)">■ Box</div>
+        <div class="fit-btn" id="ls-pill" onclick="setLabelStyle('pill',this)">● Pill</div>
+        <div class="fit-btn" id="ls-none" onclick="setLabelStyle('none',this)">Hidden</div>
+      </div>
+    </div>
+    <input type="hidden" id="ticker-label-style" value="rect">
+
+    <!-- BORDER -->
+    <div class="sep" style="margin:8px 0;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="prop-row" style="margin:0;">
+        <label>Top Border Color</label>
+        <input type="color" id="ticker-border-color" value="#e63946" oninput="updateTicker()">
+      </div>
+      <div class="prop-row" style="margin:0;">
+        <label>Border Width <span class="range-val" id="ticker-border-width-val">3px</span></label>
+        <input type="range" id="ticker-border-width" min="0" max="12" value="3" oninput="updateTicker()">
+      </div>
+    </div>
+
+    <!-- ANIMATION & SIZE -->
+    <div class="sep" style="margin:8px 0;"></div>
+    <div class="prop-row">
+      <label>Scroll Speed <span class="range-val" id="ticker-speed-val">30s</span></label>
+      <input type="range" id="ticker-speed" min="5" max="120" value="30" oninput="updateTickerSpeed(this)">
+    </div>
+    <div class="prop-row">
+      <label>Direction</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="dir-left" onclick="setTickerDir('left',this)">◀ Left</div>
+        <div class="fit-btn" id="dir-right" onclick="setTickerDir('right',this)">Right ▶</div>
+      </div>
+    </div>
+    <input type="hidden" id="ticker-direction" value="left">
+    <div class="prop-row">
+      <label>Bar Height <span class="range-val" id="ticker-height-val">36px</span></label>
+      <input type="range" id="ticker-height" min="24" max="100" value="36" oninput="updateTickerHeight(this)">
+    </div>
+    <div class="prop-row">
+      <label>Bar Position</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="pos-bottom" onclick="setTickerPos('bottom',this)">Bottom</div>
+        <div class="fit-btn" id="pos-top" onclick="setTickerPos('top',this)">Top</div>
+      </div>
+    </div>
+    <input type="hidden" id="ticker-position" value="bottom">
+
+    <button class="prop-btn secondary" style="margin-top:8px;" onclick="downloadTicker()">⬇ Download Ticker</button>
+  </div>
+
+  <div class="sep"></div>
+  <div class="section-label">Selected Element</div>
+  <div id="props-panel">
+    <div id="props-title">No element selected</div>
+
+    <div id="prop-img-row" class="prop-row" style="display:none">
+      <label>Image / Screenshot</label>
+      <div class="img-upload-zone">
+        <input type="file" accept="image/*" id="img-file-input" onchange="handleImageUpload(event)">
+        <span class="upload-icon">📁</span>
+        <span class="upload-text">Click to upload image</span>
+      </div>
+      <img id="img-preview" class="img-preview" src="" alt="">
+      <span class="img-clear-btn" id="img-clear-btn" onclick="clearImage()">✕ Remove image</span>
+    </div>
+
+    <div id="prop-fit-row" class="prop-row" style="display:none">
+      <label>Image Fit</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="fit-cover" onclick="setFit('cover')">Cover</div>
+        <div class="fit-btn" id="fit-contain" onclick="setFit('contain')">Contain</div>
+        <div class="fit-btn" id="fit-fill" onclick="setFit('fill')">Stretch</div>
+      </div>
+    </div>
+
+    <div id="prop-img-transparency-row" class="prop-row" style="display:none">
+      <label>Image Transparency <span class="range-val" id="img-transparency-val">100%</span></label>
+      <input type="range" id="prop-img-transparency" min="0" max="100" value="100" oninput="applyImgTransparency(this)">
+      <div style="display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;">
+        <div class="fit-btn" onclick="setImgTransparency(100)">Solid</div>
+        <div class="fit-btn" onclick="setImgTransparency(75)">75%</div>
+        <div class="fit-btn" onclick="setImgTransparency(50)">50%</div>
+        <div class="fit-btn" onclick="setImgTransparency(25)">25%</div>
+        <div class="fit-btn" onclick="setImgTransparency(0)">Ghost</div>
+      </div>
+    </div>
+
+    <div id="prop-img-blend-row" class="prop-row" style="display:none">
+      <label>Blend Mode</label>
+      <select id="prop-img-blend" onchange="applyProps()">
+        <option value="normal">Normal</option>
+        <option value="multiply">Multiply</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="darken">Darken</option>
+        <option value="lighten">Lighten</option>
+        <option value="color-dodge">Color Dodge</option>
+        <option value="color-burn">Color Burn</option>
+        <option value="hard-light">Hard Light</option>
+        <option value="soft-light">Soft Light</option>
+        <option value="difference">Difference</option>
+        <option value="luminosity">Luminosity</option>
+      </select>
+    </div>
+
+    <div id="prop-label-row" class="prop-row" style="display:none"><label>Label / Title</label><input type="text" id="prop-label" oninput="applyProps()"></div>
+    <div id="prop-sub-row" class="prop-row" style="display:none"><label>Subtitle / Price</label><input type="text" id="prop-sub" oninput="applyProps()"></div>
+    <div id="prop-badge-row" class="prop-row" style="display:none"><label>Badge Text</label><input type="text" id="prop-badge" oninput="applyProps()"></div>
+    <div id="prop-text-row" class="prop-row" style="display:none"><label>Text</label><textarea id="prop-text" oninput="applyProps()"></textarea></div>
+
+    <!-- FONT SECTION -->
+    <div id="prop-font-row" class="prop-row" style="display:none">
+      <label>Font Family</label>
+      <div class="font-cats" id="font-cats">
+        <div class="font-cat active" onclick="filterFonts('all',this)">All</div>
+        <div class="font-cat" onclick="filterFonts('bold',this)">Bold</div>
+        <div class="font-cat" onclick="filterFonts('display',this)">Display</div>
+        <div class="font-cat" onclick="filterFonts('clean',this)">Clean</div>
+        <div class="font-cat" onclick="filterFonts('fun',this)">Fun</div>
+        <div class="font-cat" onclick="filterFonts('retro',this)">Retro</div>
+      </div>
+      <div class="font-picker-wrap">
+        <input type="text" class="font-search" id="font-search" placeholder="Search fonts..." oninput="filterFontSearch(this.value)" onfocus="openFontDropdown()" onblur="closeFontDropdownDelayed()">
+        <div class="font-dropdown" id="font-dropdown"></div>
+      </div>
+      <div style="margin-top:6px;padding:8px 10px;background:#0d0d1a;border-radius:5px;border:1px solid var(--border);font-size:13px;" id="font-preview-line">The quick brown fox</div>
+    </div>
+
+    <div id="prop-fontsize-row" class="prop-row" style="display:none">
+      <label>Font Size <span class="range-val" id="fontsize-val">48px</span></label>
+      <div class="font-size-row">
+        <input type="range" id="prop-fontsize" min="10" max="200" value="48" oninput="applyProps()">
+      </div>
+    </div>
+
+    <div id="prop-fontweight-row" class="prop-row" style="display:none">
+      <label>Font Weight</label>
+      <select id="prop-fontweight" onchange="applyProps()">
+        <option value="400">Regular (400)</option>
+        <option value="600">Semi Bold (600)</option>
+        <option value="700">Bold (700)</option>
+        <option value="800">Extra Bold (800)</option>
+        <option value="900" selected>Black (900)</option>
+      </select>
+    </div>
+
+    <div id="prop-textalign-row" class="prop-row" style="display:none">
+      <label>Text Align</label>
+      <div class="fit-row">
+        <div class="fit-btn active" id="align-left" onclick="setAlign('left')">Left</div>
+        <div class="fit-btn active" id="align-center" onclick="setAlign('center')">Center</div>
+        <div class="fit-btn" id="align-right" onclick="setAlign('right')">Right</div>
+      </div>
+    </div>
+
+    <div class="prop-row"><label>Background Color</label><input type="color" id="prop-bg" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Frame / Border Color</label><input type="color" id="prop-frame-color" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Border Width <span class="range-val" id="border-width-val">8px</span></label><input type="range" id="prop-border-width" min="0" max="40" value="8" oninput="applyProps()"></div>
+    <div id="prop-text-color-row" class="prop-row"><label>Text Color</label><input type="color" id="prop-text-color" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Opacity <span class="range-val" id="opacity-val">100%</span></label><input type="range" id="prop-opacity" min="10" max="100" value="100" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Corner Radius <span class="range-val" id="radius-val">4px</span></label><input type="range" id="prop-radius" min="0" max="60" value="4" oninput="applyProps()"></div>
+
+    <div class="section-label" style="padding:8px 0 5px;font-size:9px;">QUICK FRAME COLORS</div>
+    <div class="color-row">
+      <div class="color-swatch" style="background:#e63946" onclick="setFrameColor('#e63946')"></div>
+      <div class="color-swatch" style="background:#f4a261" onclick="setFrameColor('#f4a261')"></div>
+      <div class="color-swatch" style="background:#2ec4b6" onclick="setFrameColor('#2ec4b6')"></div>
+      <div class="color-swatch" style="background:#3a86ff" onclick="setFrameColor('#3a86ff')"></div>
+      <div class="color-swatch" style="background:#8338ec" onclick="setFrameColor('#8338ec')"></div>
+      <div class="color-swatch" style="background:#06d6a0" onclick="setFrameColor('#06d6a0')"></div>
+      <div class="color-swatch" style="background:#ffd166" onclick="setFrameColor('#ffd166')"></div>
+      <div class="color-swatch" style="background:#ff6b6b" onclick="setFrameColor('#ff6b6b')"></div>
+      <div class="color-swatch" style="background:#ffffff;border:1px solid #444" onclick="setFrameColor('#ffffff')"></div>
+    </div>
+
+    <button class="prop-btn" onclick="downloadSelected()">⬇ Download This Element</button>
+    <button class="prop-btn danger" onclick="deleteSelected()">🗑 Delete</button>
+    <button class="prop-btn secondary" onclick="deselectAll()">✕ Deselect</button>
+  </div>
+
+  <div class="sep"></div>
+  <div class="section-label">Canvas</div>
+  <div style="padding:0 10px 6px;">
+    <div class="prop-row"><label>Background Color</label><input type="color" id="canvas-bg-color" value="#111111" oninput="document.getElementById('stream-canvas').style.background=this.value"></div>
+    <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
+      <button class="tool-btn" onclick="toggleGrid()" id="grid-btn">⊞ Grid</button>
+      <button class="tool-btn active" onclick="toggleSnap()" id="snap-btn">🧲 Snap</button>
+      <button class="tool-btn" onclick="zoomIn()">＋ Zoom</button>
+      <button class="tool-btn" onclick="zoomOut()">－ Zoom</button>
+      <button class="tool-btn" onclick="zoomFit()">⤢ Fit</button>
+    </div>
+    <div style="font-size:9px;color:var(--muted);margin-bottom:6px;line-height:1.5;">🧲 Snap: cyan = edge/align · orange = center</div>
+  </div>
+  <div class="dl-section">
+    <button class="dl-btn primary" onclick="downloadFull()">⬇ Download Full Stream (1080×1920)</button>
+    <button class="dl-btn gold" onclick="downloadAllElements()">⬇ Download All Elements</button>
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div id="main">
+  <div class="canvas-label">1080 × 1920 — STREAM CANVAS · Click elements to edit · Drag to move · Resize from corners</div>
+  <div id="canvas-wrap">
+    <div id="stream-canvas" onclick="handleCanvasClick(event)">
+      <div id="grid-overlay"></div>
+      <div id="ticker-bar">
+        <div id="ticker-label">LIVE</div>
+        <div id="ticker-track">
+          <div id="ticker-inner" style="color:#fff;">🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── FONT DATABASE ─────────────────────────────────────────────────────────
+const FONTS = [
+  {name:'Anton',cat:'bold'},{name:'Bangers',cat:'display'},{name:'Bebas Neue',cat:'bold'},
+  {name:'Black Han Sans',cat:'bold'},{name:'Boogaloo',cat:'fun'},{name:'Chakra Petch',cat:'retro'},
+  {name:'Changa',cat:'bold'},{name:'Cinzel',cat:'display'},{name:'Dela Gothic One',cat:'bold'},
+  {name:'DM Serif Display',cat:'display'},{name:'Exo 2',cat:'clean'},{name:'Fjalla One',cat:'bold'},
+  {name:'Fredoka',cat:'fun'},{name:'Fugaz One',cat:'display'},{name:'Graduate',cat:'retro'},
+  {name:'Gravitas One',cat:'display'},{name:'Impact',cat:'bold'},{name:'Josefin Sans',cat:'clean'},
+  {name:'Kanit',cat:'bold'},{name:'Knewave',cat:'fun'},{name:'Lalezar',cat:'display'},
+  {name:'Lato',cat:'clean'},{name:'League Gothic',cat:'bold'},{name:'Lexend Deca',cat:'clean'},
+  {name:'Lilita One',cat:'fun'},{name:'Lobster',cat:'fun'},{name:'Montserrat',cat:'clean'},
+  {name:'Noto Sans',cat:'clean'},{name:'Nunito',cat:'clean'},{name:'Open Sans',cat:'clean'},
+  {name:'Orbitron',cat:'retro'},{name:'Oswald',cat:'bold'},{name:'Pacifico',cat:'fun'},
+  {name:'Permanent Marker',cat:'fun'},{name:'Playfair Display',cat:'display'},{name:'Poppins',cat:'clean'},
+  {name:'Rajdhani',cat:'bold'},{name:'Raleway',cat:'clean'},{name:'Righteous',cat:'display'},
+  {name:'Roboto Condensed',cat:'bold'},{name:'Rock Salt',cat:'retro'},{name:'Rubik',cat:'clean'},
+  {name:'Russo One',cat:'retro'},{name:'Saira Condensed',cat:'bold'},{name:'Sansita',cat:'bold'},
+  {name:'Satisfy',cat:'fun'},{name:'Secular One',cat:'bold'},{name:'Sigmar One',cat:'display'},
+  {name:'Space Grotesk',cat:'clean'},{name:'Squada One',cat:'bold'},{name:'Teko',cat:'bold'},
+  {name:'Titan One',cat:'display'},{name:'Tourney',cat:'retro'},{name:'Ubuntu',cat:'clean'},
+  {name:'Ultra',cat:'display'},{name:'Unbounded',cat:'clean'},{name:'Varela Round',cat:'clean'},
+  {name:'Yanone Kaffeesatz',cat:'bold'}
+];
+
+let currentFontFilter = 'all';
+let currentFontSearch = '';
+
+function buildFontDropdown(list) {
+  const dd = document.getElementById('font-dropdown');
+  dd.innerHTML = list.map(f =>
+    `<div class="font-option" style="font-family:'${f.name}',sans-serif;" onclick="selectFont('${f.name}')" data-font="${f.name}">
+      <span class="font-preview" style="font-family:'${f.name}',sans-serif;">${f.name}</span>
+      <span style="font-size:9px;color:var(--muted);font-family:'Segoe UI';">${f.cat}</span>
+    </div>`
+  ).join('');
+}
+
+function filterFonts(cat, el) {
+  currentFontFilter = cat;
+  document.querySelectorAll('.font-cat').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  renderFontList();
+}
+
+function filterFontSearch(q) {
+  currentFontSearch = q.toLowerCase();
+  renderFontList();
+  openFontDropdown();
+}
+
+function renderFontList() {
+  let list = FONTS;
+  if (currentFontFilter !== 'all') list = list.filter(f => f.cat === currentFontFilter);
+  if (currentFontSearch) list = list.filter(f => f.name.toLowerCase().includes(currentFontSearch));
+  buildFontDropdown(list);
+  // highlight active
+  if (selectedId) {
+    const el = elements.find(e => e.id === selectedId);
+    if (el && el.font) {
+      document.querySelectorAll('.font-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.font === el.font);
+      });
+    }
+  }
+}
+
+function openFontDropdown() { document.getElementById('font-dropdown').classList.add('open'); }
+function closeFontDropdownDelayed() { setTimeout(() => document.getElementById('font-dropdown').classList.remove('open'), 200); }
+
+function selectFont(name) {
+  if (!selectedId) return;
+  const el = elements.find(e => e.id === selectedId);
+  if (!el) return;
+  el.font = name;
+  document.getElementById('font-search').value = name;
+  document.getElementById('font-preview-line').style.fontFamily = `'${name}',sans-serif`;
+  document.getElementById('font-preview-line').textContent = name + ' — Aa Bb 123';
+  document.getElementById('font-dropdown').classList.remove('open');
+  renderElement(el);
+  document.getElementById(`el-${el.id}`).classList.add('selected');
+  // highlight in list
+  document.querySelectorAll('.font-option').forEach(opt => opt.classList.toggle('active', opt.dataset.font === name));
+}
+
+// populate ticker font select
+function buildTickerFontSelect() {
+  const sel = document.getElementById('ticker-font');
+  sel.innerHTML = FONTS.map(f => `<option value="${f.name}" style="font-family:'${f.name}'">${f.name}</option>`).join('');
+}
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let elements = [];
+let selectedId = null;
+let elCounter = 0;
+let scale = 1;
+let dragging=false, dragEl=null, dragOX=0, dragOY=0;
+let resizing=false, resizeEl=null, resizeDir='';
+let resizeStartX=0, resizeStartY=0, resizeStartW=0, resizeStartH=0, resizeStartL=0, resizeStartT=0;
+
+const canvas = document.getElementById('stream-canvas');
+const wrap = document.getElementById('canvas-wrap');
+
+// ─── ZOOM ───────────────────────────────────────────────────────────────────
+function setZoom(z) {
+  scale = Math.max(0.08, Math.min(2, z));
+  wrap.style.transform = `scale(${scale})`;
+  wrap.style.transformOrigin = 'top center';
+  wrap.style.marginBottom = `${(1920*scale)-1920+40}px`;
+}
+function zoomIn(){setZoom(scale+0.05);}
+function zoomOut(){setZoom(scale-0.05);}
+function zoomFit(){setZoom((document.getElementById('main').clientHeight-80)/1920);}
+window.addEventListener('load',()=>setTimeout(zoomFit,60));
+function toggleGrid(){document.getElementById('grid-overlay').classList.toggle('visible');document.getElementById('grid-btn').classList.toggle('active');}
+
+// ─── TEMPLATES ──────────────────────────────────────────────────────────────
+const DEFAULT_FONT = 'Bebas Neue';
+const templates = {
+  cam:  (id,ox,oy)=>({id,type:'cam', x:ox||40,y:oy||40, w:480,h:560, label:'', bg:'#000000',frameColor:'#e63946',borderWidth:12,textColor:'#ffffff',opacity:100,radius:4,imageData:null,font:DEFAULT_FONT,fontSize:28,fontWeight:900,textAlign:'center'}),
+  image:(id)=>({id,type:'image',x:200,y:800,w:680,h:500,label:'',bg:'#1a1a2e',frameColor:'#3a86ff',borderWidth:6,textColor:'#ffffff',opacity:100,radius:8,imageData:null,fit:'cover',imgOpacity:100,blendMode:'normal',font:DEFAULT_FONT,fontSize:36,fontWeight:900,textAlign:'center'}),
+  ad:   (id,x,y,w,h)=>({id,type:'ad',  x:x||40,y:y||600,w:w||1000,h:h||200, label:'🔥 LIMITED DEAL — BID NOW!',sub:'$29.99 — WAS $89.99',badge:'BID NOW',bg:'#0a0a0a',frameColor:'#ffd166',borderWidth:8,textColor:'#ffffff',opacity:100,radius:10,font:'Oswald',fontSize:52,fontWeight:700,textAlign:'center'}),
+  frame:(id)=>({id,type:'frame',x:0,y:560,w:1080,h:8,label:'',bg:'#e63946',frameColor:'#e63946',borderWidth:0,textColor:'#ffffff',opacity:100,radius:0,font:DEFAULT_FONT,fontSize:20,fontWeight:900,textAlign:'center'}),
+  text: (id)=>({id,type:'text', x:40,y:1400,w:1000,h:100,text:'✨ FREE SHIPPING TODAY!',bg:'#e63946',frameColor:'#ffffff',borderWidth:0,textColor:'#ffffff',opacity:100,radius:10,font:'Anton',fontSize:56,fontWeight:900,textAlign:'center'}),
+  logo: (id)=>({id,type:'logo', x:40,y:1540,w:460,h:120,label:'MY STORE',sub:'OFFICIAL SELLER',bg:'#0d0d1a',frameColor:'#3a86ff',borderWidth:4,textColor:'#ffffff',opacity:100,radius:10,font:'Bebas Neue',fontSize:42,fontWeight:900,textAlign:'center'}),
+};
+
+let camCount=0;
+function addElement(type) {
+  const id=++elCounter;
+  let el;
+  if(type==='cam'){el=templates.cam(id,40,40+camCount*580);camCount++;}
+  else el=templates[type](id);
+  elements.push(el);
+  renderElement(el);
+  selectElement(id);
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function renderElement(el) {
+  let existing=document.getElementById(`el-${el.id}`);
+  if(existing) existing.remove();
+  const div=document.createElement('div');
+  div.className=`stream-el el-type-${el.type}`;
+  div.id=`el-${el.id}`;
+  div.style.cssText=`left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;opacity:${el.opacity/100};`;
+
+  const inner=document.createElement('div');
+  inner.className='el-inner';
+  const innerBg = el.type==='image' ? 'transparent' : el.bg;
+  inner.style.cssText=`background:${innerBg};border:${el.borderWidth}px solid ${el.frameColor};border-radius:${el.radius}px;color:${el.textColor};font-family:'${el.font}',sans-serif;`;
+
+  const ff=`font-family:'${el.font}',sans-serif;`;
+  const fs=`font-size:${el.fontSize}px;`;
+  const fw=`font-weight:${el.fontWeight};`;
+  const ta=`text-align:${el.textAlign};`;
+
+  if(el.type==='cam'){
+    const labelBar = el.label ? `<div class="cam-label" style="${ff}${fs}${fw}${ta}color:${el.textColor};">${el.label}</div>` : '';
+    if(el.imageData){
+      inner.innerHTML=`<img class="cam-bg-img" src="${el.imageData}" alt="">${labelBar}`;
+    } else {
+      inner.innerHTML=`<div class="cam-placeholder"><div class="cam-icon">📷</div><div class="cam-text">CAMERA ZONE</div></div>${labelBar}`;
+    }
+  } else if(el.type==='image'){
+    const imgOpacity=(el.imgOpacity!==undefined?el.imgOpacity:100)/100;
+    const blend=el.blendMode||'normal';
+    if(el.imageData){
+      // No background at all — let PNG transparency show through the canvas behind it
+      inner.style.background='transparent';
+      inner.style.border=el.borderWidth>0?`${el.borderWidth}px solid ${el.frameColor}`:'none';
+      inner.innerHTML=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};opacity:${imgOpacity};mix-blend-mode:${blend};">`;
+    } else {
+      inner.innerHTML=`<div class="img-placeholder"><span>🖼️</span><div>Upload image in sidebar</div></div>`;
+    }
+  } else if(el.type==='ad'){
+    inner.innerHTML=`
+      <div class="ad-tag" style="${ff}${fw}color:${el.frameColor};">⚡ SPECIAL OFFER</div>
+      <div style="${ff}font-size:${Math.max(20,el.fontSize)}px;${fw}${ta}color:${el.textColor};line-height:1.15;">${el.label||'🔥 LIMITED DEAL'}</div>
+      <div style="${ff}font-size:${Math.max(14,Math.round(el.fontSize*.6))}px;font-weight:500;${ta}color:${el.textColor};opacity:.85;">${el.sub||'$29.99'}</div>
+      <div class="ad-badge" style="${ff}font-size:${Math.max(14,Math.round(el.fontSize*.5))}px;${fw}background:${el.frameColor};color:#111;">${el.badge||'BID NOW'}</div>`;
+  } else if(el.type==='text'){
+    inner.innerHTML=`<div style="width:100%;${ff}${fs}${fw}${ta}color:${el.textColor};line-height:1.2;word-break:break-word;">${el.text||'TEXT'}</div>`;
+  } else if(el.type==='logo'){
+    inner.innerHTML=`<div style="font-size:${Math.round(el.fontSize*1.1)}px;">⭐</div>
+      <div>
+        <div style="${ff}${fs}${fw}color:${el.textColor};">${el.label||'MY STORE'}</div>
+        <div style="${ff}font-size:${Math.max(10,Math.round(el.fontSize*.35))}px;font-weight:500;opacity:.6;letter-spacing:2px;color:${el.textColor};">${el.sub||'OFFICIAL SELLER'}</div>
+      </div>`;
+  } else if(el.type==='frame'){
+    inner.innerHTML=`<div style="${ff}${fs}${ta}color:rgba(255,255,255,.15);">${el.label||''}</div>`;
+  }
+
+  // Controls
+  const controls=document.createElement('div');
+  controls.className='el-controls';
+  ['nw','n','ne','w','e','sw','s','se'].forEach(d=>{
+    const h=document.createElement('div');
+    h.className=`resize-handle rh-${d}`;
+    h.dataset.dir=d;
+    h.addEventListener('mousedown',startResize);
+    controls.appendChild(h);
+  });
+  const del=document.createElement('button');
+  del.className='el-delete';del.textContent='×';
+  del.addEventListener('click',e=>{e.stopPropagation();deleteEl(el.id);});
+  controls.appendChild(del);
+  div.appendChild(inner);div.appendChild(controls);
+  div.addEventListener('mousedown',e=>{
+    if(e.target.classList.contains('resize-handle')||e.target.classList.contains('el-delete')) return;
+    e.stopPropagation();selectElement(el.id);startDrag(e,el.id);
+  });
+  canvas.insertBefore(div,document.getElementById('ticker-bar'));
+}
+
+// ─── SELECT / PROPS ──────────────────────────────────────────────────────────
+function selectElement(id) {
+  deselectAll(false);
+  selectedId=id;
+  const div=document.getElementById(`el-${id}`);
+  if(div) div.classList.add('selected');
+  const el=elements.find(e=>e.id===id);
+  if(el) loadProps(el);
+  document.getElementById('props-panel').classList.add('visible');
+}
+
+function deselectAll(hidePanel=true) {
+  document.querySelectorAll('.stream-el').forEach(d=>d.classList.remove('selected'));
+  selectedId=null;
+  if(hidePanel) document.getElementById('props-panel').classList.remove('visible');
+}
+
+function handleCanvasClick(e) {
+  if(e.target===canvas||e.target.id==='grid-overlay') deselectAll();
+}
+
+function loadProps(el) {
+  document.getElementById('props-title').textContent=`${el.type.toUpperCase()} #${el.id}`;
+  document.getElementById('prop-bg').value=toHex(el.bg);
+  document.getElementById('prop-frame-color').value=toHex(el.frameColor);
+  document.getElementById('prop-border-width').value=el.borderWidth;
+  document.getElementById('border-width-val').textContent=el.borderWidth+'px';
+  document.getElementById('prop-text-color').value=toHex(el.textColor);
+  document.getElementById('prop-opacity').value=el.opacity;
+  document.getElementById('opacity-val').textContent=el.opacity+'%';
+  document.getElementById('prop-radius').value=el.radius;
+  document.getElementById('radius-val').textContent=el.radius+'px';
+
+  const isCam=el.type==='cam', isImg=el.type==='image', isAd=el.type==='ad';
+  const isLogo=el.type==='logo', isTxt=el.type==='text', isFrame=el.type==='frame';
+  const hasText=!isImg;
+
+  document.getElementById('prop-img-row').style.display=(isCam||isImg)?'':'none';
+  document.getElementById('prop-fit-row').style.display=isImg?'':'none';
+  document.getElementById('prop-img-transparency-row').style.display=isImg?'':'none';
+  document.getElementById('prop-img-blend-row').style.display=isImg?'':'none';
+  document.getElementById('prop-label-row').style.display=(isCam||isAd||isLogo||isFrame)?'':'none';
+  document.getElementById('prop-sub-row').style.display=(isAd||isLogo)?'':'none';
+  document.getElementById('prop-badge-row').style.display=isAd?'':'none';
+  document.getElementById('prop-text-row').style.display=isTxt?'':'none';
+  document.getElementById('prop-text-color-row').style.display=isImg?'none':'';
+  document.getElementById('prop-font-row').style.display=hasText?'':'none';
+  document.getElementById('prop-fontsize-row').style.display=hasText?'':'none';
+  document.getElementById('prop-fontweight-row').style.display=hasText?'':'none';
+  document.getElementById('prop-textalign-row').style.display=hasText?'':'none';
+
+  if(el.label!==undefined) document.getElementById('prop-label').value=el.label;
+  if(el.sub!==undefined) document.getElementById('prop-sub').value=el.sub;
+  if(el.badge!==undefined) document.getElementById('prop-badge').value=el.badge||'';
+  if(el.text!==undefined) document.getElementById('prop-text').value=el.text;
+
+  // Font
+  const font=el.font||DEFAULT_FONT;
+  document.getElementById('font-search').value=font;
+  document.getElementById('font-preview-line').style.fontFamily=`'${font}',sans-serif`;
+  document.getElementById('font-preview-line').textContent=font+' — Aa Bb 123';
+  renderFontList();
+  document.getElementById('prop-fontsize').value=el.fontSize||48;
+  document.getElementById('fontsize-val').textContent=(el.fontSize||48)+'px';
+  document.getElementById('prop-fontweight').value=el.fontWeight||900;
+
+  // text align
+  ['left','center','right'].forEach(a=>document.getElementById(`align-${a}`).classList.toggle('active',(el.textAlign||'center')===a));
+
+  // image preview
+  const preview=document.getElementById('img-preview');
+  const clearBtn=document.getElementById('img-clear-btn');
+  if(el.imageData){preview.src=el.imageData;preview.classList.add('visible');clearBtn.classList.add('visible');}
+  else{preview.src='';preview.classList.remove('visible');clearBtn.classList.remove('visible');}
+
+  if(isImg){
+    ['cover','contain','fill'].forEach(f=>document.getElementById(`fit-${f}`).classList.toggle('active',(el.fit||'cover')===f));
+    const io=el.imgOpacity!==undefined?el.imgOpacity:100;
+    document.getElementById('prop-img-transparency').value=io;
+    document.getElementById('img-transparency-val').textContent=io+'%';
+    document.getElementById('prop-img-blend').value=el.blendMode||'normal';
+  }
+}
+
+function applyProps() {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el) return;
+  el.bg=document.getElementById('prop-bg').value;
+  el.frameColor=document.getElementById('prop-frame-color').value;
+  el.borderWidth=parseInt(document.getElementById('prop-border-width').value);
+  el.textColor=document.getElementById('prop-text-color').value;
+  el.opacity=parseInt(document.getElementById('prop-opacity').value);
+  el.radius=parseInt(document.getElementById('prop-radius').value);
+  el.label=document.getElementById('prop-label').value;
+  el.sub=document.getElementById('prop-sub').value;
+  el.badge=document.getElementById('prop-badge').value;
+  el.text=document.getElementById('prop-text').value;
+  el.fontSize=parseInt(document.getElementById('prop-fontsize').value);
+  el.fontWeight=document.getElementById('prop-fontweight').value;
+  if(el.type==='image'){
+    el.blendMode=document.getElementById('prop-img-blend').value;
+  }
+  document.getElementById('border-width-val').textContent=el.borderWidth+'px';
+  document.getElementById('opacity-val').textContent=el.opacity+'%';
+  document.getElementById('radius-val').textContent=el.radius+'px';
+  document.getElementById('fontsize-val').textContent=el.fontSize+'px';
+  renderElement(el);
+  document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+function setFrameColor(c){document.getElementById('prop-frame-color').value=c;applyProps();}
+
+function setFit(fit) {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el) return;
+  el.fit=fit;
+  ['cover','contain','fill'].forEach(f=>document.getElementById(`fit-${f}`).classList.toggle('active',f===fit));
+  renderElement(el);document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+function setAlign(align) {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el) return;
+  el.textAlign=align;
+  ['left','center','right'].forEach(a=>document.getElementById(`align-${a}`).classList.toggle('active',a===align));
+  renderElement(el);document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+function applyImgTransparency(input) {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el||el.type!=='image') return;
+  el.imgOpacity=parseInt(input.value);
+  document.getElementById('img-transparency-val').textContent=el.imgOpacity+'%';
+  renderElement(el);
+  document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+function setImgTransparency(val) {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el||el.type!=='image') return;
+  el.imgOpacity=val;
+  document.getElementById('prop-img-transparency').value=val;
+  document.getElementById('img-transparency-val').textContent=val+'%';
+  renderElement(el);
+  document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+// ─── IMAGE UPLOAD ─────────────────────────────────────────────────────────
+function handleImageUpload(event) {
+  const file=event.target.files[0];
+  if(!file||!selectedId) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const el=elements.find(x=>x.id===selectedId);
+    if(!el) return;
+    el.imageData=e.target.result;
+    const preview=document.getElementById('img-preview');
+    preview.src=el.imageData;preview.classList.add('visible');
+    document.getElementById('img-clear-btn').classList.add('visible');
+    renderElement(el);document.getElementById(`el-${el.id}`).classList.add('selected');
+  };
+  reader.readAsDataURL(file);
+  event.target.value='';
+}
+function clearImage() {
+  if(!selectedId) return;
+  const el=elements.find(e=>e.id===selectedId);
+  if(!el) return;
+  el.imageData=null;
+  document.getElementById('img-preview').classList.remove('visible');
+  document.getElementById('img-clear-btn').classList.remove('visible');
+  renderElement(el);document.getElementById(`el-${el.id}`).classList.add('selected');
+}
+
+// ─── DELETE ──────────────────────────────────────────────────────────────────
+function deleteEl(id){elements=elements.filter(e=>e.id!==id);const div=document.getElementById(`el-${id}`);if(div)div.remove();if(selectedId===id)deselectAll();}
+function deleteSelected(){if(selectedId)deleteEl(selectedId);}
+
+// ─── SNAP ────────────────────────────────────────────────────────────────────
+let snapEnabled = true;
+const SNAP_THRESHOLD = 10; // px in canvas coords
+
+function toggleSnap() {
+  snapEnabled = !snapEnabled;
+  const btn = document.getElementById('snap-btn');
+  btn.classList.toggle('active', snapEnabled);
+  clearSnapLines();
+}
+
+function clearSnapLines() {
+  document.querySelectorAll('.snap-line').forEach(l => l.remove());
+}
+
+function showSnapLines(lines) {
+  clearSnapLines();
+  lines.forEach(l => {
+    const div = document.createElement('div');
+    div.className = `snap-line ${l.type} ${l.center ? (l.type==='h'?'center-h':'center-v') : ''}`;
+    if(l.type==='h') div.style.top = l.pos + 'px';
+    else div.style.left = l.pos + 'px';
+    canvas.appendChild(div);
+  });
+}
+
+function getSnapResult(el, rawX, rawY) {
+  if(!snapEnabled) return {x:rawX, y:rawY, lines:[]};
+
+  const W=1080, H=1920;
+  const cX = rawX + el.w/2;  // center x
+  const cY = rawY + el.h/2;  // center y
+  const r = rawX + el.w;     // right edge
+  const b = rawY + el.h;     // bottom edge
+
+  let snappedX = rawX, snappedY = rawY;
+  const lines = [];
+
+  // All snap edges to check against
+  const hEdges = []; // {pos, center}
+  const vEdges = []; // {pos, center}
+
+  // Canvas edges & center
+  hEdges.push({pos:0,isTop:true,center:false},{pos:H,isTop:false,center:false},{pos:H/2,isTop:null,center:true});
+  vEdges.push({pos:0,isLeft:true,center:false},{pos:W,isLeft:false,center:false},{pos:W/2,isLeft:null,center:true});
+
+  // Other elements
+  elements.forEach(other => {
+    if(other.id===el.id) return;
+    hEdges.push({pos:other.y,isTop:true,center:false},{pos:other.y+other.h,isTop:false,center:false},{pos:other.y+other.h/2,isTop:null,center:true});
+    vEdges.push({pos:other.x,isLeft:true,center:false},{pos:other.x+other.w,isLeft:false,center:false},{pos:other.x+other.w/2,isLeft:null,center:true});
+  });
+
+  let bestDX = SNAP_THRESHOLD+1, bestDY = SNAP_THRESHOLD+1;
+
+  // Vertical snap (x axis) — check left edge, right edge, center
+  vEdges.forEach(({pos,center}) => {
+    const tests = [
+      {val:rawX,         snapTo:pos},        // left→pos
+      {val:r,            snapTo:pos},         // right→pos
+      {val:cX,           snapTo:pos},         // center→pos
+    ];
+    tests.forEach(({val,snapTo}) => {
+      const d = Math.abs(val - snapTo);
+      if(d < SNAP_THRESHOLD && d < bestDX) {
+        bestDX = d;
+        if(val===rawX)      snappedX = snapTo;
+        else if(val===r)    snappedX = snapTo - el.w;
+        else                snappedX = snapTo - el.w/2;
+        lines.push({type:'v', pos:snapTo, center});
+      }
+    });
+  });
+
+  // Horizontal snap (y axis)
+  hEdges.forEach(({pos,center}) => {
+    const tests = [
+      {val:rawY,   snapTo:pos},
+      {val:b,      snapTo:pos},
+      {val:cY,     snapTo:pos},
+    ];
+    tests.forEach(({val,snapTo}) => {
+      const d = Math.abs(val - snapTo);
+      if(d < SNAP_THRESHOLD && d < bestDY) {
+        bestDY = d;
+        if(val===rawY)     snappedY = snapTo;
+        else if(val===b)   snappedY = snapTo - el.h;
+        else               snappedY = snapTo - el.h/2;
+        lines.push({type:'h', pos:snapTo, center});
+      }
+    });
+  });
+
+  return {x:Math.round(snappedX), y:Math.round(snappedY), lines};
+}
+
+// ─── DRAG ────────────────────────────────────────────────────────────────────
+function startDrag(e,id) {
+  dragging=true;dragEl=id;
+  const rect=canvas.getBoundingClientRect();
+  const el=elements.find(x=>x.id===id);
+  dragOX=(e.clientX-rect.left)/scale-el.x;
+  dragOY=(e.clientY-rect.top)/scale-el.y;
+  e.preventDefault();
+}
+
+// ─── RESIZE ──────────────────────────────────────────────────────────────────
+function startResize(e) {
+  e.stopPropagation();e.preventDefault();
+  resizing=true;resizeDir=e.target.dataset.dir;
+  resizeEl=parseInt(e.target.closest('.stream-el').id.split('-')[1]);
+  const el=elements.find(x=>x.id===resizeEl);
+  const rect=canvas.getBoundingClientRect();
+  resizeStartX=(e.clientX-rect.left)/scale;resizeStartY=(e.clientY-rect.top)/scale;
+  resizeStartW=el.w;resizeStartH=el.h;resizeStartL=el.x;resizeStartT=el.y;
+  selectElement(resizeEl);
+}
+
+document.addEventListener('mousemove',e=>{
+  const rect=canvas.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)/scale, my=(e.clientY-rect.top)/scale;
+
+  if(dragging&&dragEl){
+    const el=elements.find(x=>x.id===dragEl);if(!el)return;
+    const rawX=mx-dragOX, rawY=my-dragOY;
+    const {x,y,lines}=getSnapResult(el,rawX,rawY);
+    el.x=x; el.y=y;
+    const div=document.getElementById(`el-${dragEl}`);
+    if(div){div.style.left=el.x+'px';div.style.top=el.y+'px';}
+    showSnapLines(lines);
+  }
+
+  if(resizing&&resizeEl){
+    const el=elements.find(x=>x.id===resizeEl);if(!el)return;
+    const dx=mx-resizeStartX,dy=my-resizeStartY,d=resizeDir,MIN=40;
+    if(d.includes('e')) el.w=Math.max(MIN,resizeStartW+dx);
+    if(d.includes('s')) el.h=Math.max(MIN,resizeStartH+dy);
+    if(d.includes('w')){el.w=Math.max(MIN,resizeStartW-dx);el.x=resizeStartL+(resizeStartW-el.w);}
+    if(d.includes('n')){el.h=Math.max(MIN,resizeStartH-dy);el.y=resizeStartT+(resizeStartH-el.h);}
+    el.x=Math.round(el.x);el.y=Math.round(el.y);el.w=Math.round(el.w);el.h=Math.round(el.h);
+    const div=document.getElementById(`el-${el.id}`);
+    if(div){div.style.left=el.x+'px';div.style.top=el.y+'px';div.style.width=el.w+'px';div.style.height=el.h+'px';}
+    clearSnapLines();
+  }
+});
+
+document.addEventListener('mouseup',()=>{
+  dragging=false;dragEl=null;
+  resizing=false;resizeEl=null;
+  // keep snap lines briefly then clear
+  setTimeout(clearSnapLines, 600);
+});
+
+// ─── TICKER FONT PICKER ───────────────────────────────────────────────────────
+let tickerFontFilter='all', tickerFontSearch='';
+
+function buildTickerFontDropdown(list){
+  const dd=document.getElementById('ticker-font-dropdown');
+  dd.innerHTML=list.map(f=>
+    `<div class="font-option" style="font-family:'${f.name}',sans-serif;" onclick="selectTickerFont('${f.name}')" data-font="${f.name}">
+      <span style="font-family:'${f.name}',sans-serif;font-size:15px;">${f.name}</span>
+      <span style="font-size:9px;color:var(--muted);font-family:'Segoe UI';">${f.cat}</span>
+    </div>`
+  ).join('');
+}
+
+function filterTickerFonts(cat,el){
+  tickerFontFilter=cat;
+  document.querySelectorAll('.ticker-font-cats .font-cat').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  renderTickerFontList();
+}
+
+function filterTickerFontSearch(q){
+  tickerFontSearch=q.toLowerCase();
+  renderTickerFontList();
+  openTickerFontDd();
+}
+
+function renderTickerFontList(){
+  let list=FONTS;
+  if(tickerFontFilter!=='all') list=list.filter(f=>f.cat===tickerFontFilter);
+  if(tickerFontSearch) list=list.filter(f=>f.name.toLowerCase().includes(tickerFontSearch));
+  buildTickerFontDropdown(list);
+  const cur=document.getElementById('ticker-font').value;
+  document.querySelectorAll('#ticker-font-dropdown .font-option').forEach(o=>o.classList.toggle('active',o.dataset.font===cur));
+}
+
+function openTickerFontDd(){ document.getElementById('ticker-font-dropdown').classList.add('open'); }
+function closeTickerFontDdDelayed(){ setTimeout(()=>document.getElementById('ticker-font-dropdown').classList.remove('open'),200); }
+
+function selectTickerFont(name){
+  document.getElementById('ticker-font').value=name;
+  document.getElementById('ticker-font-search').value=name;
+  const prev=document.getElementById('ticker-font-preview');
+  prev.style.fontFamily=`'${name}',sans-serif`;
+  prev.textContent=name+' — Aa Bb 123 🔥';
+  document.getElementById('ticker-font-dropdown').classList.remove('open');
+  document.querySelectorAll('#ticker-font-dropdown .font-option').forEach(o=>o.classList.toggle('active',o.dataset.font===name));
+  updateTicker();
+}
+
+function setTickerTextColor(c){document.getElementById('ticker-text-color').value=c;updateTicker();}
+
+function setTickerTransform(val,el){
+  document.querySelectorAll('#tt-none,#tt-upper,#tt-lower').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ticker-inner').style.textTransform=val;
+  // store on hidden input
+  document.getElementById('ticker-inner').dataset.transform=val;
+  updateTicker();
+}
+
+function setLabelStyle(val,el){
+  document.querySelectorAll('#ls-rect,#ls-pill,#ls-none').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ticker-label-style').value=val;
+  updateTicker();
+}
+
+function setTickerDir(val,el){
+  document.querySelectorAll('#dir-left,#dir-right').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ticker-direction').value=val;
+  updateTicker();
+}
+
+function setTickerPos(val,el){
+  document.querySelectorAll('#pos-bottom,#pos-top').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ticker-position').value=val;
+  const bar=document.getElementById('ticker-bar');
+  if(val==='top'){bar.style.bottom='auto';bar.style.top='0';bar.style.borderTop='none';bar.style.borderBottom=`${parseInt(document.getElementById('ticker-border-width').value)||3}px solid ${document.getElementById('ticker-border-color').value}`;}
+  else{bar.style.top='auto';bar.style.bottom='0';bar.style.borderBottom='none';}
+  updateTicker();
+}
+
+// ─── TICKER UPDATE ────────────────────────────────────────────────────────────
+function updateTicker(){
+  const lc=document.getElementById('ticker-label-color').value;
+  const ltc=document.getElementById('ticker-label-text-color').value;
+  const tc=document.getElementById('ticker-text-color').value;
+  const bg=document.getElementById('ticker-bg-color').value;
+  const text=document.getElementById('ticker-text').value;
+  const lt=document.getElementById('ticker-label-text').value;
+  const sep=document.getElementById('ticker-separator').value||'     ';
+  const font=document.getElementById('ticker-font').value||'Bebas Neue';
+  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
+  const fw=document.getElementById('ticker-fontweight').value||'700';
+  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
+  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
+  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
+  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
+  const bc=document.getElementById('ticker-border-color').value;
+  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
+  const pos=document.getElementById('ticker-position').value||'bottom';
+  const dir=document.getElementById('ticker-direction').value||'left';
+
+  // update val displays
+  document.getElementById('ticker-fontsize-val').textContent=fs+'px';
+  document.getElementById('ticker-spacing-val').textContent=ls+'px';
+  document.getElementById('ticker-border-width-val').textContent=bw+'px';
+  document.getElementById('ticker-label-fontsize-val').textContent=lfs+'px';
+
+  // Label
+  const lbl=document.getElementById('ticker-label');
+  lbl.textContent=lt;
+  lbl.style.background=lc;
+  lbl.style.color=ltc;
+  lbl.style.fontFamily=`'${font}',sans-serif`;
+  lbl.style.fontSize=lfs+'px';
+  if(labelStyle==='none'){lbl.style.display='none';}
+  else{lbl.style.display='flex'; lbl.style.borderRadius=labelStyle==='pill'?'0 20px 20px 0':'0';}
+
+  // Inner text
+  const inner=document.getElementById('ticker-inner');
+  const repeated=text+sep+text;
+  inner.textContent=repeated;
+  inner.style.color=tc;
+  inner.style.fontFamily=`'${font}',sans-serif`;
+  inner.style.fontSize=fs+'px';
+  inner.style.fontWeight=fw;
+  inner.style.letterSpacing=ls+'px';
+  inner.style.textTransform=transform;
+  // direction: reverse animation
+  const dur=parseFloat(document.getElementById('ticker-speed').value)||30;
+  inner.style.animationName='';
+  void inner.offsetWidth; // reflow
+  if(dir==='right'){
+    inner.style.animation=`ticker-scroll-right ${dur}s linear infinite`;
+  } else {
+    inner.style.animation=`ticker-scroll ${dur}s linear infinite`;
+  }
+
+  // Bar
+  const bar=document.getElementById('ticker-bar');
+  bar.style.background=bg;
+  if(pos==='top'){
+    bar.style.top='0';bar.style.bottom='auto';
+    bar.style.borderTop='none';
+    bar.style.borderBottom=`${bw}px solid ${bc}`;
+  } else {
+    bar.style.bottom='0';bar.style.top='auto';
+    bar.style.borderBottom='none';
+    bar.style.borderTop=`${bw}px solid ${bc}`;
+  }
+}
+
+function updateTickerSpeed(el){
+  document.getElementById('ticker-speed-val').textContent=el.value+'s';
+  const inner=document.getElementById('ticker-inner');
+  const dir=document.getElementById('ticker-direction').value||'left';
+  inner.style.animation=`${dir==='right'?'ticker-scroll-right':'ticker-scroll'} ${el.value}s linear infinite`;
+}
+
+function updateTickerHeight(el){
+  document.getElementById('ticker-height-val').textContent=el.value+'px';
+  document.getElementById('ticker-bar').style.height=el.value+'px';
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function toHex(c){if(!c)return'#000000';if(c.startsWith('#'))return c.substring(0,7);return'#000000';}
+
+function googleFontsLink() {
+  const used=new Set(elements.map(e=>e.font).filter(Boolean));
+  used.add(document.getElementById('ticker-font')?.value||'Bebas Neue');
+  const params=[...used].map(f=>`family=${f.replace(/ /g,'+')}`).join('&');
+  return `https://fonts.googleapis.com/css2?${params}&display=swap`;
+}
+
+function buildElementHTML(el) {
+  const bs=el.borderWidth>0?`border:${el.borderWidth}px solid ${el.frameColor};`:'';
+  const ff=`font-family:'${el.font||DEFAULT_FONT}',sans-serif;`;
+  const fs=`font-size:${el.fontSize||48}px;`;
+  const fw=`font-weight:${el.fontWeight||900};`;
+  const ta=`text-align:${el.textAlign||'center'};`;
+  let inner='';
+  if(el.type==='cam'){
+    const labelBar = el.label ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.65);padding:8px 14px;${ff}${fs}${fw}${ta}color:${el.textColor};z-index:2;">${el.label}</div>` : '';
+    if(el.imageData){
+      inner=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">${labelBar}`;
+    } else {
+      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;opacity:.2;">📷</div>${labelBar}`;
+    }
+  } else if(el.type==='image'){
+    const imgOpacity=(el.imgOpacity!==undefined?el.imgOpacity:100)/100;
+    const blend=el.blendMode||'normal';
+    if(el.imageData){
+      // transparent wrapper — let PNG alpha channel show through naturally
+      return `<div style="position:absolute;left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;border-radius:${el.radius}px;overflow:hidden;opacity:${el.opacity/100};background:transparent;${el.borderWidth>0?`border:${el.borderWidth}px solid ${el.frameColor};`:''}"><img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};opacity:${imgOpacity};mix-blend-mode:${blend};display:block;"></div>`;
+    } else {
+      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.2;">🖼️</div>`;
+    }
+  } else if(el.type==='ad'){
+    inner=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;height:100%;padding:20px;">
+<div style="${ff}font-size:14px;font-weight:800;letter-spacing:2px;color:${el.frameColor};">⚡ SPECIAL OFFER</div>
+<div style="${ff}font-size:${Math.max(20,el.fontSize)}px;${fw}${ta}color:${el.textColor};line-height:1.15;">${el.label||'🔥 LIMITED DEAL'}</div>
+<div style="${ff}font-size:${Math.max(14,Math.round(el.fontSize*.6))}px;font-weight:500;${ta}color:${el.textColor};opacity:.85;">${el.sub||'$29.99'}</div>
+<div style="${ff}font-size:${Math.max(14,Math.round(el.fontSize*.5))}px;${fw}background:${el.frameColor};color:#111;padding:8px 22px;border-radius:30px;">${el.badge||'BID NOW'}</div>
+</div>`;
+  } else if(el.type==='text'){
+    inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:10px;">
+<div style="${ff}${fs}${fw}${ta}color:${el.textColor};line-height:1.2;word-break:break-word;">${el.text||'TEXT'}</div></div>`;
+  } else if(el.type==='logo'){
+    inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:14px;padding:16px;">
+<div style="font-size:${Math.round(el.fontSize*1.1)}px;">⭐</div>
+<div><div style="${ff}${fs}${fw}color:${el.textColor};">${el.label||'MY STORE'}</div>
+<div style="${ff}font-size:${Math.max(10,Math.round(el.fontSize*.35))}px;font-weight:500;opacity:.6;letter-spacing:2px;color:${el.textColor};">${el.sub||'OFFICIAL SELLER'}</div></div></div>`;
+  } else if(el.type==='frame'){
+    inner=`<div style="${ff}${fs}${ta}color:rgba(255,255,255,.15);">${el.label||''}</div>`;
+  }
+  return `<div style="width:${el.w}px;height:${el.h}px;background:${el.bg};${bs}border-radius:${el.radius}px;position:relative;overflow:hidden;opacity:${el.opacity/100};">${inner}</div>`;
+}
+
+function downloadSelected(){
+  if(!selectedId){alert('Select an element first!');return;}
+  const el=elements.find(e=>e.id===selectedId);if(!el)return;
+  const gf=`<link href="https://fonts.googleapis.com/css2?family=${(el.font||DEFAULT_FONT).replace(/ /g,'+')}:wght@400;700;900&display=swap" rel="stylesheet">`;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gf}<style>*{margin:0;padding:0;box-sizing:border-box}body{width:${el.w}px;height:${el.h}px;overflow:hidden;}</style></head><body>${buildElementHTML(el)}</body></html>`;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download=`stream-${el.type}-${el.id}.html`;a.click();
+}
+
+function downloadAllElements(){
+  if(!elements.length){alert('Add some elements first!');return;}
+  elements.forEach((el,i)=>setTimeout(()=>{
+    const gf=`<link href="https://fonts.googleapis.com/css2?family=${(el.font||DEFAULT_FONT).replace(/ /g,'+')}:wght@400;700;900&display=swap" rel="stylesheet">`;
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gf}<style>*{margin:0;padding:0;box-sizing:border-box}body{width:${el.w}px;height:${el.h}px;overflow:hidden;}</style></head><body>${buildElementHTML(el)}</body></html>`;
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download=`stream-${el.type}-${el.id}.html`;a.click();
+  },i*350));
+}
+
+function downloadTicker(){
+  const lt=document.getElementById('ticker-label-text').value;
+  const text=document.getElementById('ticker-text').value;
+  const sep=document.getElementById('ticker-separator').value||'     ';
+  const lc=document.getElementById('ticker-label-color').value;
+  const ltc=document.getElementById('ticker-label-text-color').value;
+  const tc=document.getElementById('ticker-text-color').value;
+  const bg=document.getElementById('ticker-bg-color').value;
+  const h=parseInt(document.getElementById('ticker-height').value)||36;
+  const font=document.getElementById('ticker-font').value||'Bebas Neue';
+  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
+  const fw=document.getElementById('ticker-fontweight').value||'700';
+  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
+  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
+  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
+  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
+  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
+  const bc=document.getElementById('ticker-border-color').value;
+  const dir=document.getElementById('ticker-direction').value||'left';
+  const pos=document.getElementById('ticker-position').value||'bottom';
+  const dur=parseInt(document.getElementById('ticker-speed').value)||30;
+  const gf=`<link href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g,'+')}:wght@400;700;900&display=swap" rel="stylesheet">`;
+  const repeated=text+sep+text;
+  const borderCss=pos==='top'?`border-bottom:${bw}px solid ${bc};`:`border-top:${bw}px solid ${bc};`;
+  const animDir=dir==='right'?'ticker-right':'ticker-left';
+  const labelRadius=labelStyle==='pill'?'0 20px 20px 0':'0';
+  const labelDisplay=labelStyle==='none'?'display:none;':'';
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gf}<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:${h}px;overflow:hidden;font-family:'${font}',sans-serif;}
+#bar{display:flex;align-items:center;height:100%;background:${bg};${borderCss}}
+#lbl{background:${lc};color:${ltc};padding:0 18px;font-size:${lfs}px;font-weight:${fw};white-space:nowrap;height:100%;display:flex;align-items:center;font-family:'${font}',sans-serif;letter-spacing:1px;border-radius:${labelRadius};flex-shrink:0;${labelDisplay}}
+#track{flex:1;overflow:hidden;position:relative;height:100%;}
+#inner{position:absolute;white-space:nowrap;display:flex;align-items:center;height:100%;animation:${animDir} ${dur}s linear infinite;font-size:${fs}px;font-weight:${fw};color:${tc};font-family:'${font}',sans-serif;letter-spacing:${ls}px;text-transform:${transform};padding-left:30px;}
+@keyframes ticker-left{0%{transform:translateX(1080px)}100%{transform:translateX(-100%)}}
+@keyframes ticker-right{0%{transform:translateX(-100%)}100%{transform:translateX(1080px)}}
+</style></head><body>
+<div id="bar"><div id="lbl">${lt}</div><div id="track"><div id="inner">${repeated}</div></div></div>
+</body></html>`;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='stream-ticker.html';a.click();
+}
+
+function downloadFull(){
+  deselectAll();
+  const lt=document.getElementById('ticker-label-text').value;
+  const tt=document.getElementById('ticker-text').value;
+  const sep=document.getElementById('ticker-separator').value||'     ';
+  const lc=document.getElementById('ticker-label-color').value;
+  const ltc=document.getElementById('ticker-label-text-color').value;
+  const tc=document.getElementById('ticker-text-color').value;
+  const bg=document.getElementById('ticker-bg-color').value;
+  const th=parseInt(document.getElementById('ticker-height').value)||36;
+  const tickerFont=document.getElementById('ticker-font').value||'Bebas Neue';
+  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
+  const fw=document.getElementById('ticker-fontweight').value||'700';
+  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
+  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
+  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
+  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
+  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
+  const bc=document.getElementById('ticker-border-color').value;
+  const dir=document.getElementById('ticker-direction').value||'left';
+  const pos=document.getElementById('ticker-position').value||'bottom';
+  const dur=parseInt(document.getElementById('ticker-speed').value)||30;
+  const canvasBg=document.getElementById('canvas-bg-color').value;
+  const repeated=tt+sep+tt;
+  const borderCss=pos==='top'?`border-bottom:${bw}px solid ${bc};`:`border-top:${bw}px solid ${bc};`;
+  const posCss=pos==='top'?'top:0;bottom:auto;':'bottom:0;top:auto;';
+  const animDir=dir==='right'?'ticker-right':'ticker-left';
+  const labelRadius=labelStyle==='pill'?'0 20px 20px 0':'0';
+  const labelDisplay=labelStyle==='none'?'display:none;':'';
+  const elsHTML=elements.map(el=>`<div style="position:absolute;left:${el.x}px;top:${el.y}px;">${buildElementHTML(el)}</div>`).join('\n');
+  const gfLink=`<link href="${googleFontsLink()}" rel="stylesheet">`;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gfLink}<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;overflow:hidden;background:${canvasBg};position:relative;}
+#tb{position:absolute;${posCss}left:0;right:0;height:${th}px;display:flex;align-items:center;overflow:hidden;${borderCss}background:${bg};z-index:50;}
+#tlbl{background:${lc};color:${ltc};padding:0 18px;font-size:${lfs}px;font-weight:${fw};white-space:nowrap;height:100%;display:flex;align-items:center;font-family:'${tickerFont}',sans-serif;letter-spacing:1px;border-radius:${labelRadius};flex-shrink:0;${labelDisplay}}
+#ttrack{flex:1;overflow:hidden;position:relative;height:100%;}
+#tinner{position:absolute;white-space:nowrap;display:flex;align-items:center;height:100%;animation:${animDir} ${dur}s linear infinite;font-size:${fs}px;font-weight:${fw};color:${tc};font-family:'${tickerFont}',sans-serif;letter-spacing:${ls}px;text-transform:${transform};padding-left:40px;}
+@keyframes ticker-left{0%{transform:translateX(1080px)}100%{transform:translateX(-100%)}}
+@keyframes ticker-right{0%{transform:translateX(-100%)}100%{transform:translateX(1080px)}}
+</style></head><body>${elsHTML}
+<div id="tb"><div id="tlbl">${lt}</div><div id="ttrack"><div id="tinner">${repeated}</div></div></div>
+</body></html>`;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='ebay-stream-1080x1920.html';a.click();
+}
+
+// ─── DEFAULT LAYOUT ───────────────────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  buildTickerFontDropdown(FONTS);
+  renderTickerFontList();
+  // init ticker font preview
+  const initTickerFont='Bebas Neue';
+  const tfPrev=document.getElementById('ticker-font-preview');
+  tfPrev.style.fontFamily=`'${initTickerFont}',sans-serif`;
+  tfPrev.textContent=initTickerFont+' — Aa Bb 123 🔥';
+  document.getElementById('ticker-font-search').value=initTickerFont;
+  buildFontDropdown(FONTS);
+
+  setTimeout(()=>{
+    // Top ad banner
+    const adEl=templates.ad(++elCounter,40,40,1000,180);
+    adEl.label="🔥 TODAY'S TOP DEAL — BID NOW!";adEl.frameColor='#ffd166';adEl.borderWidth=8;adEl.radius=12;
+    adEl.font='Oswald';adEl.fontSize=46;
+    elements.push(adEl);renderElement(adEl);
+
+    // Divider
+    const fEl={id:++elCounter,type:'frame',x:0,y:238,w:1080,h:8,label:'',bg:'#e63946',frameColor:'#e63946',borderWidth:0,textColor:'#fff',opacity:100,radius:0,font:'Bebas Neue',fontSize:14,fontWeight:900,textAlign:'center'};
+    elements.push(fEl);renderElement(fEl);
+
+    // Camera 1
+    const c1=templates.cam(++elCounter,40,262);c1.w=480;c1.h=560;c1.label='';c1.frameColor='#e63946';c1.borderWidth=10;c1.font='Bebas Neue';c1.fontSize=26;camCount++;
+    elements.push(c1);renderElement(c1);
+
+    // Camera 2
+    const c2=templates.cam(++elCounter,560,262);c2.w=480;c2.h=560;c2.label='';c2.frameColor='#3a86ff';c2.borderWidth=10;c2.font='Bebas Neue';c2.fontSize=26;camCount++;
+    elements.push(c2);renderElement(c2);
+
+    // Divider 2
+    const f2={id:++elCounter,type:'frame',x:0,y:840,w:1080,h:8,label:'',bg:'#ffd166',frameColor:'#ffd166',borderWidth:0,textColor:'#fff',opacity:100,radius:0,font:'Bebas Neue',fontSize:14,fontWeight:900,textAlign:'center'};
+    elements.push(f2);renderElement(f2);
+
+    // Spotlight ad
+    const ad2=templates.ad(++elCounter,40,870,1000,280);
+    ad2.label='🎯 ITEM SPOTLIGHT';ad2.sub='Starting at $9.99 · Free Shipping';
+    ad2.frameColor='#2ec4b6';ad2.borderWidth=6;ad2.radius=14;ad2.font='Kanit';ad2.fontSize=54;
+    elements.push(ad2);renderElement(ad2);
+
+    // Logo
+    const lg=templates.logo(++elCounter);lg.x=40;lg.y=1780;lg.w=460;lg.h=100;lg.font='Bebas Neue';
+    elements.push(lg);renderElement(lg);
+
+    deselectAll();
+  },100);
+});
+</script>
+</body>
+</html>

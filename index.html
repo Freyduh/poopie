@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eBay Stream Builder</title>
+<title>eBay Stream Builder – Deutsch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bangers&family=Bebas+Neue&family=Black+Han+Sans&family=Boogaloo&family=Chakra+Petch:wght@700&family=Changa:wght@800&family=Cinzel:wght@900&family=Dela+Gothic+One&family=DM+Serif+Display&family=Exo+2:wght@900&family=Fjalla+One&family=Fredoka:wght@700&family=Fugaz+One&family=Graduate&family=Gravitas+One&family=Impact&family=Josefin+Sans:wght@700&family=Kanit:wght@800&family=Knewave&family=Lalezar&family=Lato:wght@900&family=League+Gothic&family=Lexend+Deca:wght@900&family=Lilita+One&family=Lobster&family=Montserrat:wght@900&family=Noto+Sans:wght@900&family=Nunito:wght@900&family=Open+Sans:wght@800&family=Orbitron:wght@900&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:wght@900&family=Poppins:wght@900&family=Rajdhani:wght@700&family=Raleway:wght@900&family=Righteous&family=Roboto+Condensed:wght@900&family=Rock+Salt&family=Rubik:wght@900&family=Russo+One&family=Saira+Condensed:wght@900&family=Sansita:wght@900&family=Satisfy&family=Secular+One&family=Sigmar+One&family=Space+Grotesk:wght@700&family=Squada+One&family=Teko:wght@700&family=Titan+One&family=Tourney:wght@900&family=Ubuntu:wght@700&family=Ultra&family=Unbounded:wght@900&family=Varela+Round&family=Yanone+Kaffeesatz:wght@700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -114,10 +115,14 @@
   .el-delete { position:absolute; top:-10px; right:-10px; width:20px; height:20px; background:var(--accent); color:#fff; border:none; border-radius:50%; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:12; pointer-events:all; }
 
   .cam-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
-  .cam-icon { font-size:56px; opacity:.25; }
-  .cam-text { font-size:16px; color:rgba(255,255,255,.3); font-weight:700; letter-spacing:2px; }
+  .cam-icon { font-size:56px; opacity:.15; }
   .cam-bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
-  .cam-label { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.65); padding:8px 14px; text-align:center; backdrop-filter:blur(4px); z-index:2; }
+
+  .el-type-adzone .el-inner { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .adzone-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:.4; }
+  .adzone-placeholder span { font-size:32px; }
+  .adzone-placeholder div { font-size:11px; color:#fff; letter-spacing:1px; font-weight:700; }
+  .adzone-tag { position:absolute; top:8px; left:8px; background:rgba(255,255,255,.15); color:rgba(255,255,255,.6); font-size:10px; font-weight:800; letter-spacing:1.5px; padding:3px 7px; border-radius:4px; }
 
   .el-type-image .el-inner { display:flex; align-items:center; justify-content:center; }
   .el-type-image .img-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:.35; font-size:14px; color:#fff; }
@@ -131,12 +136,12 @@
   .el-type-logo .el-inner { display:flex; align-items:center; justify-content:center; gap:14px; padding:16px; }
   .el-type-frame .el-inner { display:flex; align-items:center; justify-content:center; }
 
-  #ticker-bar { position:absolute; bottom:0; left:0; right:0; height:36px; z-index:50; display:flex; align-items:center; overflow:hidden; border-top:3px solid var(--accent); }
-  #ticker-label { background:var(--accent); color:#fff; padding:0 16px; font-size:14px; font-weight:900; white-space:nowrap; height:100%; display:flex; align-items:center; flex-shrink:0; letter-spacing:1px; z-index:2; }
-  #ticker-track { flex:1; overflow:hidden; position:relative; height:100%; }
-  #ticker-inner { position:absolute; white-space:nowrap; display:flex; align-items:center; height:100%; animation:ticker-scroll 30s linear infinite; font-size:15px; font-weight:600; padding-left:30px; }
-  @keyframes ticker-scroll { 0%{transform:translateX(1080px)} 100%{transform:translateX(-100%)} }
-  @keyframes ticker-scroll-right { 0%{transform:translateX(-100%)} 100%{transform:translateX(1080px)} }
+  #social-bar { position:absolute; bottom:0; left:0; right:0; height:100px; z-index:50; display:flex; align-items:center; justify-content:center; overflow:hidden; gap:32px; padding:0 30px; }
+  /* Capsule-badge style social slot */
+  .social-slot { display:flex; align-items:center; position:relative; flex-shrink:0; }
+  .social-slot-icon-img { object-fit:contain; z-index:2; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.45)); flex-shrink:0; }
+  .social-slot-badge { background-color:#111116; border-radius:0 30px 30px 0; z-index:1; display:flex; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.35); border:2px solid rgba(255,255,255,0.1); }
+  .social-slot-handle { color:#ffffff; font-weight:700; letter-spacing:0.5px; white-space:nowrap; }
 
   .tool-btn { padding:7px 12px; background:var(--panel); border:1px solid var(--border); color:var(--text); border-radius:7px; font-size:11px; cursor:pointer; font-weight:600; }
   .tool-btn:hover { background:var(--panel2); }
@@ -145,16 +150,6 @@
   .fit-row { display:flex; gap:4px; }
   .fit-btn { flex:1; padding:4px; background:var(--panel); border:1px solid var(--border); color:var(--muted); border-radius:4px; font-size:10px; cursor:pointer; text-align:center; }
   .fit-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(230,57,70,.1); }
-
-  /* SNAP LINES */
-  .snap-line { position:absolute; pointer-events:none; z-index:999; }
-  .snap-line.h { left:0; right:0; height:1px; background:#00e5ff; box-shadow:0 0 4px #00e5ff; }
-  .snap-line.v { top:0; bottom:0; width:1px; background:#00e5ff; box-shadow:0 0 4px #00e5ff; }
-  .snap-line.center-h { background:#ff9800; box-shadow:0 0 4px #ff9800; }
-  .snap-line.center-v { background:#ff9800; box-shadow:0 0 4px #ff9800; }
-
-  .snap-indicator { position:absolute; background:#00e5ff; color:#000; font-size:9px; font-weight:800;
-    padding:2px 5px; border-radius:3px; pointer-events:none; z-index:1000; white-space:nowrap; }
 
   #main::-webkit-scrollbar { width:5px; height:5px; }
   #main::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
@@ -170,286 +165,125 @@
     <div><span>Stream Builder</span><small>eBay Live · 1080 × 1920</small></div>
   </div>
 
-  <div class="section-label">Add Elements</div>
-  <button class="add-btn" onclick="addElement('cam')"><div class="btn-icon" style="background:#1d3a5f;">📷</div><div><div class="btn-label">Camera Area</div><span class="btn-sub">Drag zone + upload image/feed</span></div></button>
-  <button class="add-btn" onclick="addElement('image')"><div class="btn-icon" style="background:#1a3a2a;">🖼️</div><div><div class="btn-label">Image / Photo</div><span class="btn-sub">Product photo, graphic, banner</span></div></button>
-  <button class="add-btn" onclick="addElement('ad')"><div class="btn-icon" style="background:#1d3a1d;">💰</div><div><div class="btn-label">Ad / Promo Block</div><span class="btn-sub">Price, deal, offer banner</span></div></button>
-  <button class="add-btn" onclick="addElement('frame')"><div class="btn-icon" style="background:#3a1d1d;">🟥</div><div><div class="btn-label">Bold Frame</div><span class="btn-sub">Thick colored border overlay</span></div></button>
-  <button class="add-btn" onclick="addElement('text')"><div class="btn-icon" style="background:#3a2d1d;">✏️</div><div><div class="btn-label">Text Block</div><span class="btn-sub">Title, label, overlay text</span></div></button>
-  <button class="add-btn" onclick="addElement('logo')"><div class="btn-icon" style="background:#2d1d3a;">⭐</div><div><div class="btn-label">Logo / Brand</div><span class="btn-sub">Store name & badge</span></div></button>
+  <div class="section-label">Elemente hinzufügen</div>
+  <button class="add-btn" onclick="addElement('cam')"><div class="btn-icon" style="background:#1d3a5f;">📷</div><div><div class="btn-label">Kamera-Bereich</div><span class="btn-sub">Ziehzone + Bild/Feed hochladen</span></div></button>
+  <button class="add-btn" onclick="addElement('image')"><div class="btn-icon" style="background:#1a3a2a;">🖼️</div><div><div class="btn-label">Bild / Foto</div><span class="btn-sub">Produktfoto, Grafik, Banner</span></div></button>
+  <button class="add-btn" onclick="addElement('adzone')"><div class="btn-icon" style="background:#2a1a3a;">📐</div><div><div class="btn-label">Werbebereich</div><span class="btn-sub">GIF/PNG-Overlay · transparenter Hintergrund</span></div></button>
+  <button class="add-btn" onclick="addElement('ad')"><div class="btn-icon" style="background:#1d3a1d;">💰</div><div><div class="btn-label">Promo-Block</div><span class="btn-sub">Preis, Angebot, Deal-Banner</span></div></button>
+  <button class="add-btn" onclick="addElement('frame')"><div class="btn-icon" style="background:#3a1d1d;">🟥</div><div><div class="btn-label">Fetter Rahmen</div><span class="btn-sub">Dicker farbiger Rahmen-Overlay</span></div></button>
+  <button class="add-btn" onclick="addElement('text')"><div class="btn-icon" style="background:#3a2d1d;">✏️</div><div><div class="btn-label">Textblock</div><span class="btn-sub">Titel, Beschriftung, Overlay-Text</span></div></button>
+  <button class="add-btn" onclick="addElement('logo')"><div class="btn-icon" style="background:#2d1d3a;">⭐</div><div><div class="btn-label">Logo / Marke</div><span class="btn-sub">Shop-Name & Badge</span></div></button>
 
   <div class="sep"></div>
-  <div class="section-label">Ticker / Crawl</div>
+  <div class="section-label">Social-Media-Leiste</div>
   <div class="ticker-settings">
-    <h4>🎞 BOTTOM TICKER</h4>
+    <h4 style="display:flex;align-items:center;justify-content:space-between;">📱 SOCIAL-LEISTE
+      <button id="social-toggle-btn" onclick="toggleSocialBar()" style="font-size:9px;font-weight:700;padding:3px 9px;border-radius:4px;border:1px solid var(--accent);background:rgba(230,57,70,.2);color:var(--accent);cursor:pointer;letter-spacing:.5px;">AN</button>
+    </h4>
 
-    <!-- TEXT CONTENT -->
+    <!-- Globale Leisten-Einstellungen -->
+    <div class="prop-row"><label>Badge-Hintergrund</label><input type="color" id="social-bg" value="#111116" oninput="updateSocialBar()"></div>
+    <div class="prop-row"><label>Handle-Textfarbe</label><input type="color" id="social-text-color" value="#ffffff" oninput="updateSocialBar()"></div>
     <div class="prop-row">
-      <label>Crawl Text</label>
-      <textarea id="ticker-text" oninput="updateTicker()" style="min-height:54px;">🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out!</textarea>
+      <label>Schriftart</label>
+      <select id="social-font" onchange="updateSocialBar()" style="width:100%;background:#0d0d1a;border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;"></select>
     </div>
-    <div class="prop-row">
-      <label>Label Tag</label>
-      <input type="text" id="ticker-label-text" value="LIVE" oninput="updateTicker()">
-    </div>
-    <div class="prop-row">
-      <label>Separator between repeats</label>
-      <input type="text" id="ticker-separator" value="  ·  " oninput="updateTicker()">
-    </div>
+    <div class="prop-row"><label>Leistenhöhe <span class="range-val" id="social-height-val">100px</span></label><input type="range" min="60" max="160" value="100" oninput="updateSocialHeight(this)"></div>
+    <div class="prop-row"><label>Icon-Größe <span class="range-val" id="social-icon-val">90px</span></label><input type="range" min="40" max="140" value="90" oninput="updateSocialIconSize(this)"></div>
+    <div class="prop-row"><label>Abstand zwischen Slots <span class="range-val" id="social-gap-val">32px</span></label><input type="range" min="8" max="80" value="32" oninput="updateSocialGap(this)"></div>
 
-    <!-- FONT -->
-    <div class="prop-row">
-      <label>Ticker Font</label>
-      <div class="ticker-font-cats" style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px;">
-        <div class="font-cat active" onclick="filterTickerFonts('all',this)">All</div>
-        <div class="font-cat" onclick="filterTickerFonts('bold',this)">Bold</div>
-        <div class="font-cat" onclick="filterTickerFonts('display',this)">Display</div>
-        <div class="font-cat" onclick="filterTickerFonts('clean',this)">Clean</div>
-        <div class="font-cat" onclick="filterTickerFonts('fun',this)">Fun</div>
-        <div class="font-cat" onclick="filterTickerFonts('retro',this)">Retro</div>
-      </div>
-      <div style="position:relative;">
-        <input type="text" id="ticker-font-search" placeholder="Search fonts..." class="font-search" style="border-radius:5px 5px 0 0;" oninput="filterTickerFontSearch(this.value)" onfocus="openTickerFontDd()" onblur="closeTickerFontDdDelayed()">
-        <div id="ticker-font-dropdown" class="font-dropdown"></div>
-      </div>
-      <div id="ticker-font-preview" style="margin-top:5px;padding:7px 10px;background:#0d0d1a;border-radius:5px;border:1px solid var(--border);font-size:14px;color:var(--text);">Bebas Neue — Aa Bb 123</div>
-    </div>
-    <input type="hidden" id="ticker-font" value="Bebas Neue">
+    <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+    <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:6px;">SLOTS (bis zu 4)</div>
 
-    <!-- FONT SIZE & WEIGHT -->
-    <div class="prop-row">
-      <label>Font Size <span class="range-val" id="ticker-fontsize-val">15px</span></label>
-      <input type="range" id="ticker-fontsize" min="10" max="60" value="15" oninput="updateTicker()">
-    </div>
-    <div class="prop-row">
-      <label>Font Weight</label>
-      <select id="ticker-fontweight" onchange="updateTicker()">
-        <option value="400">Regular</option>
-        <option value="600">Semi Bold</option>
-        <option value="700" selected>Bold</option>
-        <option value="800">Extra Bold</option>
-        <option value="900">Black</option>
-      </select>
-    </div>
-    <div class="prop-row">
-      <label>Letter Spacing <span class="range-val" id="ticker-spacing-val">0px</span></label>
-      <input type="range" id="ticker-spacing" min="-2" max="10" value="0" step="0.5" oninput="updateTicker()">
-    </div>
-    <div class="prop-row">
-      <label>Text Transform</label>
-      <div class="fit-row">
-        <div class="fit-btn active" id="tt-none" onclick="setTickerTransform('none',this)">Normal</div>
-        <div class="fit-btn" id="tt-upper" onclick="setTickerTransform('uppercase',this)">UPPER</div>
-        <div class="fit-btn" id="tt-lower" onclick="setTickerTransform('lowercase',this)">lower</div>
-      </div>
-    </div>
-
-    <!-- COLORS -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div class="prop-row" style="margin:0;">
-        <label>Text Color</label>
-        <input type="color" id="ticker-text-color" value="#ffffff" oninput="updateTicker()">
-      </div>
-      <div class="prop-row" style="margin:0;">
-        <label>Background</label>
-        <input type="color" id="ticker-bg-color" value="#000000" oninput="updateTicker()">
-      </div>
-    </div>
-    <div style="margin-top:6px;">
-      <label style="font-size:10px;color:var(--muted);display:block;margin-bottom:3px;">Quick text colors</label>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;">
-        <div class="color-swatch" style="background:#ffffff;border:1px solid #444" onclick="setTickerTextColor('#ffffff')"></div>
-        <div class="color-swatch" style="background:#ffd166" onclick="setTickerTextColor('#ffd166')"></div>
-        <div class="color-swatch" style="background:#f4a261" onclick="setTickerTextColor('#f4a261')"></div>
-        <div class="color-swatch" style="background:#06d6a0" onclick="setTickerTextColor('#06d6a0')"></div>
-        <div class="color-swatch" style="background:#3a86ff" onclick="setTickerTextColor('#3a86ff')"></div>
-        <div class="color-swatch" style="background:#e63946" onclick="setTickerTextColor('#e63946')"></div>
-        <div class="color-swatch" style="background:#000000;border:1px solid #555" onclick="setTickerTextColor('#000000')"></div>
-      </div>
-    </div>
-
-    <!-- LABEL BADGE -->
-    <div class="sep" style="margin:8px 0;"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div class="prop-row" style="margin:0;">
-        <label>Label BG</label>
-        <input type="color" id="ticker-label-color" value="#e63946" oninput="updateTicker()">
-      </div>
-      <div class="prop-row" style="margin:0;">
-        <label>Label Text</label>
-        <input type="color" id="ticker-label-text-color" value="#ffffff" oninput="updateTicker()">
-      </div>
-    </div>
-    <div class="prop-row" style="margin-top:6px;">
-      <label>Label Font Size <span class="range-val" id="ticker-label-fontsize-val">14px</span></label>
-      <input type="range" id="ticker-label-fontsize" min="8" max="40" value="14" oninput="updateTicker()">
-    </div>
-    <div class="prop-row">
-      <label>Label Style</label>
-      <div class="fit-row">
-        <div class="fit-btn active" id="ls-rect" onclick="setLabelStyle('rect',this)">■ Box</div>
-        <div class="fit-btn" id="ls-pill" onclick="setLabelStyle('pill',this)">● Pill</div>
-        <div class="fit-btn" id="ls-none" onclick="setLabelStyle('none',this)">Hidden</div>
-      </div>
-    </div>
-    <input type="hidden" id="ticker-label-style" value="rect">
-
-    <!-- BORDER -->
-    <div class="sep" style="margin:8px 0;"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div class="prop-row" style="margin:0;">
-        <label>Top Border Color</label>
-        <input type="color" id="ticker-border-color" value="#e63946" oninput="updateTicker()">
-      </div>
-      <div class="prop-row" style="margin:0;">
-        <label>Border Width <span class="range-val" id="ticker-border-width-val">3px</span></label>
-        <input type="range" id="ticker-border-width" min="0" max="12" value="3" oninput="updateTicker()">
-      </div>
-    </div>
-
-    <!-- ANIMATION & SIZE -->
-    <div class="sep" style="margin:8px 0;"></div>
-    <div class="prop-row">
-      <label>Scroll Speed <span class="range-val" id="ticker-speed-val">30s</span></label>
-      <input type="range" id="ticker-speed" min="5" max="120" value="30" oninput="updateTickerSpeed(this)">
-    </div>
-    <div class="prop-row">
-      <label>Direction</label>
-      <div class="fit-row">
-        <div class="fit-btn active" id="dir-left" onclick="setTickerDir('left',this)">◀ Left</div>
-        <div class="fit-btn" id="dir-right" onclick="setTickerDir('right',this)">Right ▶</div>
-      </div>
-    </div>
-    <input type="hidden" id="ticker-direction" value="left">
-    <div class="prop-row">
-      <label>Bar Height <span class="range-val" id="ticker-height-val">36px</span></label>
-      <input type="range" id="ticker-height" min="24" max="100" value="36" oninput="updateTickerHeight(this)">
-    </div>
-    <div class="prop-row">
-      <label>Bar Position</label>
-      <div class="fit-row">
-        <div class="fit-btn active" id="pos-bottom" onclick="setTickerPos('bottom',this)">Bottom</div>
-        <div class="fit-btn" id="pos-top" onclick="setTickerPos('top',this)">Top</div>
-      </div>
-    </div>
-    <input type="hidden" id="ticker-position" value="bottom">
-
-    <button class="prop-btn secondary" style="margin-top:8px;" onclick="downloadTicker()">⬇ Download Ticker</button>
+    <!-- Slot-Liste -->
+    <div id="social-slots-list"></div>
+    <button class="prop-btn secondary" style="margin-top:4px;" onclick="addSocialSlot()">+ Slot hinzufügen</button>
+    <button class="prop-btn secondary" onclick="downloadSocialBar()">⬇ Social-Leiste herunterladen</button>
   </div>
 
   <div class="sep"></div>
-  <div class="section-label">Selected Element</div>
+  <div class="section-label">Ausgewähltes Element</div>
   <div id="props-panel">
-    <div id="props-title">No element selected</div>
+    <div id="props-title">Kein Element ausgewählt</div>
 
     <div id="prop-img-row" class="prop-row" style="display:none">
-      <label>Image / Screenshot</label>
+      <label>Bild / Screenshot</label>
       <div class="img-upload-zone">
         <input type="file" accept="image/*" id="img-file-input" onchange="handleImageUpload(event)">
         <span class="upload-icon">📁</span>
-        <span class="upload-text">Click to upload image</span>
+        <span class="upload-text">Klicken zum Hochladen</span>
       </div>
       <img id="img-preview" class="img-preview" src="" alt="">
-      <span class="img-clear-btn" id="img-clear-btn" onclick="clearImage()">✕ Remove image</span>
+      <span class="img-clear-btn" id="img-clear-btn" onclick="clearImage()">✕ Bild entfernen</span>
     </div>
 
     <div id="prop-fit-row" class="prop-row" style="display:none">
-      <label>Image Fit</label>
+      <label>Bildanpassung</label>
       <div class="fit-row">
-        <div class="fit-btn active" id="fit-cover" onclick="setFit('cover')">Cover</div>
-        <div class="fit-btn" id="fit-contain" onclick="setFit('contain')">Contain</div>
-        <div class="fit-btn" id="fit-fill" onclick="setFit('fill')">Stretch</div>
+        <div class="fit-btn active" id="fit-cover" onclick="setFit('cover')">Füllen</div>
+        <div class="fit-btn" id="fit-contain" onclick="setFit('contain')">Einpassen</div>
+        <div class="fit-btn" id="fit-fill" onclick="setFit('fill')">Strecken</div>
       </div>
     </div>
 
-    <div id="prop-img-transparency-row" class="prop-row" style="display:none">
-      <label>Image Transparency <span class="range-val" id="img-transparency-val">100%</span></label>
-      <input type="range" id="prop-img-transparency" min="0" max="100" value="100" oninput="applyImgTransparency(this)">
-      <div style="display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;">
-        <div class="fit-btn" onclick="setImgTransparency(100)">Solid</div>
-        <div class="fit-btn" onclick="setImgTransparency(75)">75%</div>
-        <div class="fit-btn" onclick="setImgTransparency(50)">50%</div>
-        <div class="fit-btn" onclick="setImgTransparency(25)">25%</div>
-        <div class="fit-btn" onclick="setImgTransparency(0)">Ghost</div>
-      </div>
-    </div>
-
-    <div id="prop-img-blend-row" class="prop-row" style="display:none">
-      <label>Blend Mode</label>
-      <select id="prop-img-blend" onchange="applyProps()">
-        <option value="normal">Normal</option>
-        <option value="multiply">Multiply</option>
-        <option value="screen">Screen</option>
-        <option value="overlay">Overlay</option>
-        <option value="darken">Darken</option>
-        <option value="lighten">Lighten</option>
-        <option value="color-dodge">Color Dodge</option>
-        <option value="color-burn">Color Burn</option>
-        <option value="hard-light">Hard Light</option>
-        <option value="soft-light">Soft Light</option>
-        <option value="difference">Difference</option>
-        <option value="luminosity">Luminosity</option>
-      </select>
-    </div>
-
-    <div id="prop-label-row" class="prop-row" style="display:none"><label>Label / Title</label><input type="text" id="prop-label" oninput="applyProps()"></div>
-    <div id="prop-sub-row" class="prop-row" style="display:none"><label>Subtitle / Price</label><input type="text" id="prop-sub" oninput="applyProps()"></div>
-    <div id="prop-badge-row" class="prop-row" style="display:none"><label>Badge Text</label><input type="text" id="prop-badge" oninput="applyProps()"></div>
+    <div id="prop-label-row" class="prop-row" style="display:none"><label>Beschriftung / Titel</label><input type="text" id="prop-label" oninput="applyProps()"></div>
+    <div id="prop-sub-row" class="prop-row" style="display:none"><label>Untertitel / Preis</label><input type="text" id="prop-sub" oninput="applyProps()"></div>
+    <div id="prop-badge-row" class="prop-row" style="display:none"><label>Badge-Text</label><input type="text" id="prop-badge" oninput="applyProps()"></div>
     <div id="prop-text-row" class="prop-row" style="display:none"><label>Text</label><textarea id="prop-text" oninput="applyProps()"></textarea></div>
 
-    <!-- FONT SECTION -->
+    <!-- SCHRIFTART-BEREICH -->
     <div id="prop-font-row" class="prop-row" style="display:none">
-      <label>Font Family</label>
+      <label>Schriftfamilie</label>
       <div class="font-cats" id="font-cats">
-        <div class="font-cat active" onclick="filterFonts('all',this)">All</div>
-        <div class="font-cat" onclick="filterFonts('bold',this)">Bold</div>
+        <div class="font-cat active" onclick="filterFonts('all',this)">Alle</div>
+        <div class="font-cat" onclick="filterFonts('bold',this)">Fett</div>
         <div class="font-cat" onclick="filterFonts('display',this)">Display</div>
-        <div class="font-cat" onclick="filterFonts('clean',this)">Clean</div>
-        <div class="font-cat" onclick="filterFonts('fun',this)">Fun</div>
+        <div class="font-cat" onclick="filterFonts('clean',this)">Klar</div>
+        <div class="font-cat" onclick="filterFonts('fun',this)">Spaß</div>
         <div class="font-cat" onclick="filterFonts('retro',this)">Retro</div>
       </div>
       <div class="font-picker-wrap">
-        <input type="text" class="font-search" id="font-search" placeholder="Search fonts..." oninput="filterFontSearch(this.value)" onfocus="openFontDropdown()" onblur="closeFontDropdownDelayed()">
+        <input type="text" class="font-search" id="font-search" placeholder="Schrift suchen..." oninput="filterFontSearch(this.value)" onfocus="openFontDropdown()" onblur="closeFontDropdownDelayed()">
         <div class="font-dropdown" id="font-dropdown"></div>
       </div>
       <div style="margin-top:6px;padding:8px 10px;background:#0d0d1a;border-radius:5px;border:1px solid var(--border);font-size:13px;" id="font-preview-line">The quick brown fox</div>
     </div>
 
     <div id="prop-fontsize-row" class="prop-row" style="display:none">
-      <label>Font Size <span class="range-val" id="fontsize-val">48px</span></label>
+      <label>Schriftgröße <span class="range-val" id="fontsize-val">48px</span></label>
       <div class="font-size-row">
         <input type="range" id="prop-fontsize" min="10" max="200" value="48" oninput="applyProps()">
       </div>
     </div>
 
     <div id="prop-fontweight-row" class="prop-row" style="display:none">
-      <label>Font Weight</label>
+      <label>Schriftgewicht</label>
       <select id="prop-fontweight" onchange="applyProps()">
-        <option value="400">Regular (400)</option>
-        <option value="600">Semi Bold (600)</option>
-        <option value="700">Bold (700)</option>
-        <option value="800">Extra Bold (800)</option>
-        <option value="900" selected>Black (900)</option>
+        <option value="400">Normal (400)</option>
+        <option value="600">Halbfett (600)</option>
+        <option value="700">Fett (700)</option>
+        <option value="800">Extrafett (800)</option>
+        <option value="900" selected>Schwarz (900)</option>
       </select>
     </div>
 
     <div id="prop-textalign-row" class="prop-row" style="display:none">
-      <label>Text Align</label>
+      <label>Textausrichtung</label>
       <div class="fit-row">
-        <div class="fit-btn active" id="align-left" onclick="setAlign('left')">Left</div>
-        <div class="fit-btn active" id="align-center" onclick="setAlign('center')">Center</div>
-        <div class="fit-btn" id="align-right" onclick="setAlign('right')">Right</div>
+        <div class="fit-btn active" id="align-left" onclick="setAlign('left')">Links</div>
+        <div class="fit-btn active" id="align-center" onclick="setAlign('center')">Mitte</div>
+        <div class="fit-btn" id="align-right" onclick="setAlign('right')">Rechts</div>
       </div>
     </div>
 
-    <div class="prop-row"><label>Background Color</label><input type="color" id="prop-bg" oninput="applyProps()"></div>
-    <div class="prop-row"><label>Frame / Border Color</label><input type="color" id="prop-frame-color" oninput="applyProps()"></div>
-    <div class="prop-row"><label>Border Width <span class="range-val" id="border-width-val">8px</span></label><input type="range" id="prop-border-width" min="0" max="40" value="8" oninput="applyProps()"></div>
-    <div id="prop-text-color-row" class="prop-row"><label>Text Color</label><input type="color" id="prop-text-color" oninput="applyProps()"></div>
-    <div class="prop-row"><label>Opacity <span class="range-val" id="opacity-val">100%</span></label><input type="range" id="prop-opacity" min="10" max="100" value="100" oninput="applyProps()"></div>
-    <div class="prop-row"><label>Corner Radius <span class="range-val" id="radius-val">4px</span></label><input type="range" id="prop-radius" min="0" max="60" value="4" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Hintergrundfarbe</label><input type="color" id="prop-bg" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Rahmen- / Randfarbe</label><input type="color" id="prop-frame-color" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Rahmenbreite <span class="range-val" id="border-width-val">8px</span></label><input type="range" id="prop-border-width" min="0" max="40" value="8" oninput="applyProps()"></div>
+    <div id="prop-text-color-row" class="prop-row"><label>Textfarbe</label><input type="color" id="prop-text-color" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Deckkraft <span class="range-val" id="opacity-val">100%</span></label><input type="range" id="prop-opacity" min="10" max="100" value="100" oninput="applyProps()"></div>
+    <div class="prop-row"><label>Eckenradius <span class="range-val" id="radius-val">4px</span></label><input type="range" id="prop-radius" min="0" max="60" value="4" oninput="applyProps()"></div>
 
-    <div class="section-label" style="padding:8px 0 5px;font-size:9px;">QUICK FRAME COLORS</div>
+    <div class="section-label" style="padding:8px 0 5px;font-size:9px;">SCHNELLFARBEN FÜR RAHMEN</div>
     <div class="color-row">
       <div class="color-swatch" style="background:#e63946" onclick="setFrameColor('#e63946')"></div>
       <div class="color-swatch" style="background:#f4a261" onclick="setFrameColor('#f4a261')"></div>
@@ -462,41 +296,35 @@
       <div class="color-swatch" style="background:#ffffff;border:1px solid #444" onclick="setFrameColor('#ffffff')"></div>
     </div>
 
-    <button class="prop-btn" onclick="downloadSelected()">⬇ Download This Element</button>
-    <button class="prop-btn danger" onclick="deleteSelected()">🗑 Delete</button>
-    <button class="prop-btn secondary" onclick="deselectAll()">✕ Deselect</button>
+    <button class="prop-btn" onclick="downloadSelected()">⬇ Dieses Element herunterladen</button>
+    <button class="prop-btn danger" onclick="deleteSelected()">🗑 Löschen</button>
+    <button class="prop-btn secondary" onclick="deselectAll()">✕ Auswahl aufheben</button>
   </div>
 
   <div class="sep"></div>
-  <div class="section-label">Canvas</div>
+  <div class="section-label">Leinwand</div>
   <div style="padding:0 10px 6px;">
-    <div class="prop-row"><label>Background Color</label><input type="color" id="canvas-bg-color" value="#111111" oninput="document.getElementById('stream-canvas').style.background=this.value"></div>
+    <div class="prop-row"><label>Hintergrundfarbe</label><input type="color" id="canvas-bg-color" value="#111111" oninput="document.getElementById('stream-canvas').style.background=this.value"></div>
     <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
-      <button class="tool-btn" onclick="toggleGrid()" id="grid-btn">⊞ Grid</button>
-      <button class="tool-btn active" onclick="toggleSnap()" id="snap-btn">🧲 Snap</button>
+      <button class="tool-btn" onclick="toggleGrid()" id="grid-btn">⊞ Raster</button>
       <button class="tool-btn" onclick="zoomIn()">＋ Zoom</button>
       <button class="tool-btn" onclick="zoomOut()">－ Zoom</button>
-      <button class="tool-btn" onclick="zoomFit()">⤢ Fit</button>
+      <button class="tool-btn" onclick="zoomFit()">⤢ Anpassen</button>
     </div>
-    <div style="font-size:9px;color:var(--muted);margin-bottom:6px;line-height:1.5;">🧲 Snap: cyan = edge/align · orange = center</div>
   </div>
   <div class="dl-section">
-    <button class="dl-btn primary" onclick="downloadFull()">⬇ Download Full Stream (1080×1920)</button>
-    <button class="dl-btn gold" onclick="downloadAllElements()">⬇ Download All Elements</button>
+    <button class="dl-btn primary" onclick="downloadFull()">⬇ Vollständigen Stream herunterladen (1080×1920)</button>
+    <button class="dl-btn gold" onclick="downloadAllElements()">⬇ Alle Elemente herunterladen</button>
   </div>
 </div>
 
 <!-- CANVAS -->
 <div id="main">
-  <div class="canvas-label">1080 × 1920 — STREAM CANVAS · Click elements to edit · Drag to move · Resize from corners</div>
+  <div class="canvas-label">1080 × 1920 — STREAM-LEINWAND · Elemente anklicken zum Bearbeiten · Ziehen zum Verschieben · Ecken zum Skalieren</div>
   <div id="canvas-wrap">
     <div id="stream-canvas" onclick="handleCanvasClick(event)">
       <div id="grid-overlay"></div>
-      <div id="ticker-bar">
-        <div id="ticker-label">LIVE</div>
-        <div id="ticker-track">
-          <div id="ticker-inner" style="color:#fff;">🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 LIVE NOW on eBay! · Amazing deals · Bid now · Free shipping on orders over $50 · Limited time only · Don't miss out!</div>
-        </div>
+      <div id="social-bar" style="height:100px;">
       </div>
     </div>
   </div>
@@ -587,10 +415,10 @@ function selectFont(name) {
   document.querySelectorAll('.font-option').forEach(opt => opt.classList.toggle('active', opt.dataset.font === name));
 }
 
-// populate ticker font select
-function buildTickerFontSelect() {
-  const sel = document.getElementById('ticker-font');
-  sel.innerHTML = FONTS.map(f => `<option value="${f.name}" style="font-family:'${f.name}'">${f.name}</option>`).join('');
+// populate social bar font select
+function buildSocialFontSelect() {
+  const sel = document.getElementById('social-font');
+  sel.innerHTML = FONTS.map(f => `<option value="${f.name}"${f.name==='Bebas Neue'?' selected':''}>${f.name}</option>`).join('');
 }
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
@@ -621,9 +449,10 @@ function toggleGrid(){document.getElementById('grid-overlay').classList.toggle('
 // ─── TEMPLATES ──────────────────────────────────────────────────────────────
 const DEFAULT_FONT = 'Bebas Neue';
 const templates = {
-  cam:  (id,ox,oy)=>({id,type:'cam', x:ox||40,y:oy||40, w:480,h:560, label:'', bg:'#000000',frameColor:'#e63946',borderWidth:12,textColor:'#ffffff',opacity:100,radius:4,imageData:null,font:DEFAULT_FONT,fontSize:28,fontWeight:900,textAlign:'center'}),
-  image:(id)=>({id,type:'image',x:200,y:800,w:680,h:500,label:'',bg:'#1a1a2e',frameColor:'#3a86ff',borderWidth:6,textColor:'#ffffff',opacity:100,radius:8,imageData:null,fit:'cover',imgOpacity:100,blendMode:'normal',font:DEFAULT_FONT,fontSize:36,fontWeight:900,textAlign:'center'}),
+  cam:  (id,ox,oy)=>({id,type:'cam', x:ox||40,y:oy||40, w:480,h:560, label:'', bg:'#000000',frameColor:'#000000',borderWidth:0,textColor:'#ffffff',opacity:100,radius:4,imageData:null,font:DEFAULT_FONT,fontSize:28,fontWeight:900,textAlign:'center'}),
+  image:(id)=>({id,type:'image',x:200,y:800,w:680,h:500,label:'',bg:'#1a1a2e',frameColor:'#3a86ff',borderWidth:6,textColor:'#ffffff',opacity:100,radius:8,imageData:null,fit:'cover',font:DEFAULT_FONT,fontSize:36,fontWeight:900,textAlign:'center'}),
   ad:   (id,x,y,w,h)=>({id,type:'ad',  x:x||40,y:y||600,w:w||1000,h:h||200, label:'🔥 LIMITED DEAL — BID NOW!',sub:'$29.99 — WAS $89.99',badge:'BID NOW',bg:'#0a0a0a',frameColor:'#ffd166',borderWidth:8,textColor:'#ffffff',opacity:100,radius:10,font:'Oswald',fontSize:52,fontWeight:700,textAlign:'center'}),
+  adzone:(id,x,y,w,h)=>({id,type:'adzone',x:x||40,y:y||600,w:w||300,h:h||300,label:'AD',bg:'transparent',frameColor:'rgba(255,255,255,0.08)',borderWidth:1,textColor:'#ffffff',opacity:100,radius:6,imageData:null,fit:'contain',font:DEFAULT_FONT,fontSize:20,fontWeight:700,textAlign:'center'}),
   frame:(id)=>({id,type:'frame',x:0,y:560,w:1080,h:8,label:'',bg:'#e63946',frameColor:'#e63946',borderWidth:0,textColor:'#ffffff',opacity:100,radius:0,font:DEFAULT_FONT,fontSize:20,fontWeight:900,textAlign:'center'}),
   text: (id)=>({id,type:'text', x:40,y:1400,w:1000,h:100,text:'✨ FREE SHIPPING TODAY!',bg:'#e63946',frameColor:'#ffffff',borderWidth:0,textColor:'#ffffff',opacity:100,radius:10,font:'Anton',fontSize:56,fontWeight:900,textAlign:'center'}),
   logo: (id)=>({id,type:'logo', x:40,y:1540,w:460,h:120,label:'MY STORE',sub:'OFFICIAL SELLER',bg:'#0d0d1a',frameColor:'#3a86ff',borderWidth:4,textColor:'#ffffff',opacity:100,radius:10,font:'Bebas Neue',fontSize:42,fontWeight:900,textAlign:'center'}),
@@ -634,6 +463,7 @@ function addElement(type) {
   const id=++elCounter;
   let el;
   if(type==='cam'){el=templates.cam(id,40,40+camCount*580);camCount++;}
+  else if(type==='adzone') el=templates.adzone(id);
   else el=templates[type](id);
   elements.push(el);
   renderElement(el);
@@ -651,8 +481,7 @@ function renderElement(el) {
 
   const inner=document.createElement('div');
   inner.className='el-inner';
-  const innerBg = el.type==='image' ? 'transparent' : el.bg;
-  inner.style.cssText=`background:${innerBg};border:${el.borderWidth}px solid ${el.frameColor};border-radius:${el.radius}px;color:${el.textColor};font-family:'${el.font}',sans-serif;`;
+  inner.style.cssText=`background:${el.bg};border:${el.borderWidth}px solid ${el.frameColor};border-radius:${el.radius}px;color:${el.textColor};font-family:'${el.font}',sans-serif;`;
 
   const ff=`font-family:'${el.font}',sans-serif;`;
   const fs=`font-size:${el.fontSize}px;`;
@@ -660,20 +489,21 @@ function renderElement(el) {
   const ta=`text-align:${el.textAlign};`;
 
   if(el.type==='cam'){
-    const labelBar = el.label ? `<div class="cam-label" style="${ff}${fs}${fw}${ta}color:${el.textColor};">${el.label}</div>` : '';
+    inner.style.border='none';
     if(el.imageData){
-      inner.innerHTML=`<img class="cam-bg-img" src="${el.imageData}" alt="">${labelBar}`;
+      inner.innerHTML=`<img class="cam-bg-img" src="${el.imageData}" alt="">`;
     } else {
-      inner.innerHTML=`<div class="cam-placeholder"><div class="cam-icon">📷</div><div class="cam-text">CAMERA ZONE</div></div>${labelBar}`;
+      inner.innerHTML=`<div class="cam-placeholder"><div class="cam-icon">📷</div></div>`;
+    }
+  } else if(el.type==='adzone'){
+    if(el.imageData){
+      inner.innerHTML=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'contain'};">`;
+    } else {
+      inner.innerHTML=`<div class="adzone-placeholder"><span>📐</span><div>AD ZONE</div><div style="font-size:9px;opacity:.6;">Upload GIF / PNG</div></div>`;
     }
   } else if(el.type==='image'){
-    const imgOpacity=(el.imgOpacity!==undefined?el.imgOpacity:100)/100;
-    const blend=el.blendMode||'normal';
     if(el.imageData){
-      // No background at all — let PNG transparency show through the canvas behind it
-      inner.style.background='transparent';
-      inner.style.border=el.borderWidth>0?`${el.borderWidth}px solid ${el.frameColor}`:'none';
-      inner.innerHTML=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};opacity:${imgOpacity};mix-blend-mode:${blend};">`;
+      inner.innerHTML=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};">`;
     } else {
       inner.innerHTML=`<div class="img-placeholder"><span>🖼️</span><div>Upload image in sidebar</div></div>`;
     }
@@ -750,16 +580,13 @@ function loadProps(el) {
   document.getElementById('prop-radius').value=el.radius;
   document.getElementById('radius-val').textContent=el.radius+'px';
 
-  const isCam=el.type==='cam', isImg=el.type==='image', isAd=el.type==='ad';
+  const isCam=el.type==='cam', isImg=el.type==='image', isAd=el.type==='ad', isAdzone=el.type==='adzone';
   const isLogo=el.type==='logo', isTxt=el.type==='text', isFrame=el.type==='frame';
-  const hasText=!isImg;
+  const hasText=!isImg&&!isAdzone;
 
-  document.getElementById('prop-img-row').style.display=(isCam||isImg)?'':'none';
-  document.getElementById('prop-fit-row').style.display=isImg?'':'none';
-  document.getElementById('prop-img-transparency-row').style.display=isImg?'':'none';
-  document.getElementById('prop-img-blend-row').style.display=isImg?'':'none';
-  document.getElementById('prop-label-row').style.display=(isCam||isAd||isLogo||isFrame)?'':'none';
-  document.getElementById('prop-sub-row').style.display=(isAd||isLogo)?'':'none';
+  document.getElementById('prop-img-row').style.display=(isCam||isImg||isAdzone)?'':'none';
+  document.getElementById('prop-fit-row').style.display=(isImg||isAdzone)?'':'none';
+  document.getElementById('prop-label-row').style.display=(isCam||isAd||isLogo||isFrame)?'':'none';  document.getElementById('prop-sub-row').style.display=(isAd||isLogo)?'':'none';
   document.getElementById('prop-badge-row').style.display=isAd?'':'none';
   document.getElementById('prop-text-row').style.display=isTxt?'':'none';
   document.getElementById('prop-text-color-row').style.display=isImg?'none':'';
@@ -792,13 +619,7 @@ function loadProps(el) {
   if(el.imageData){preview.src=el.imageData;preview.classList.add('visible');clearBtn.classList.add('visible');}
   else{preview.src='';preview.classList.remove('visible');clearBtn.classList.remove('visible');}
 
-  if(isImg){
-    ['cover','contain','fill'].forEach(f=>document.getElementById(`fit-${f}`).classList.toggle('active',(el.fit||'cover')===f));
-    const io=el.imgOpacity!==undefined?el.imgOpacity:100;
-    document.getElementById('prop-img-transparency').value=io;
-    document.getElementById('img-transparency-val').textContent=io+'%';
-    document.getElementById('prop-img-blend').value=el.blendMode||'normal';
-  }
+  if(isImg){['cover','contain','fill'].forEach(f=>document.getElementById(`fit-${f}`).classList.toggle('active',(el.fit||'cover')===f));}
 }
 
 function applyProps() {
@@ -817,9 +638,6 @@ function applyProps() {
   el.text=document.getElementById('prop-text').value;
   el.fontSize=parseInt(document.getElementById('prop-fontsize').value);
   el.fontWeight=document.getElementById('prop-fontweight').value;
-  if(el.type==='image'){
-    el.blendMode=document.getElementById('prop-img-blend').value;
-  }
   document.getElementById('border-width-val').textContent=el.borderWidth+'px';
   document.getElementById('opacity-val').textContent=el.opacity+'%';
   document.getElementById('radius-val').textContent=el.radius+'px';
@@ -846,27 +664,6 @@ function setAlign(align) {
   el.textAlign=align;
   ['left','center','right'].forEach(a=>document.getElementById(`align-${a}`).classList.toggle('active',a===align));
   renderElement(el);document.getElementById(`el-${el.id}`).classList.add('selected');
-}
-
-function applyImgTransparency(input) {
-  if(!selectedId) return;
-  const el=elements.find(e=>e.id===selectedId);
-  if(!el||el.type!=='image') return;
-  el.imgOpacity=parseInt(input.value);
-  document.getElementById('img-transparency-val').textContent=el.imgOpacity+'%';
-  renderElement(el);
-  document.getElementById(`el-${el.id}`).classList.add('selected');
-}
-
-function setImgTransparency(val) {
-  if(!selectedId) return;
-  const el=elements.find(e=>e.id===selectedId);
-  if(!el||el.type!=='image') return;
-  el.imgOpacity=val;
-  document.getElementById('prop-img-transparency').value=val;
-  document.getElementById('img-transparency-val').textContent=val+'%';
-  renderElement(el);
-  document.getElementById(`el-${el.id}`).classList.add('selected');
 }
 
 // ─── IMAGE UPLOAD ─────────────────────────────────────────────────────────
@@ -900,102 +697,6 @@ function clearImage() {
 function deleteEl(id){elements=elements.filter(e=>e.id!==id);const div=document.getElementById(`el-${id}`);if(div)div.remove();if(selectedId===id)deselectAll();}
 function deleteSelected(){if(selectedId)deleteEl(selectedId);}
 
-// ─── SNAP ────────────────────────────────────────────────────────────────────
-let snapEnabled = true;
-const SNAP_THRESHOLD = 10; // px in canvas coords
-
-function toggleSnap() {
-  snapEnabled = !snapEnabled;
-  const btn = document.getElementById('snap-btn');
-  btn.classList.toggle('active', snapEnabled);
-  clearSnapLines();
-}
-
-function clearSnapLines() {
-  document.querySelectorAll('.snap-line').forEach(l => l.remove());
-}
-
-function showSnapLines(lines) {
-  clearSnapLines();
-  lines.forEach(l => {
-    const div = document.createElement('div');
-    div.className = `snap-line ${l.type} ${l.center ? (l.type==='h'?'center-h':'center-v') : ''}`;
-    if(l.type==='h') div.style.top = l.pos + 'px';
-    else div.style.left = l.pos + 'px';
-    canvas.appendChild(div);
-  });
-}
-
-function getSnapResult(el, rawX, rawY) {
-  if(!snapEnabled) return {x:rawX, y:rawY, lines:[]};
-
-  const W=1080, H=1920;
-  const cX = rawX + el.w/2;  // center x
-  const cY = rawY + el.h/2;  // center y
-  const r = rawX + el.w;     // right edge
-  const b = rawY + el.h;     // bottom edge
-
-  let snappedX = rawX, snappedY = rawY;
-  const lines = [];
-
-  // All snap edges to check against
-  const hEdges = []; // {pos, center}
-  const vEdges = []; // {pos, center}
-
-  // Canvas edges & center
-  hEdges.push({pos:0,isTop:true,center:false},{pos:H,isTop:false,center:false},{pos:H/2,isTop:null,center:true});
-  vEdges.push({pos:0,isLeft:true,center:false},{pos:W,isLeft:false,center:false},{pos:W/2,isLeft:null,center:true});
-
-  // Other elements
-  elements.forEach(other => {
-    if(other.id===el.id) return;
-    hEdges.push({pos:other.y,isTop:true,center:false},{pos:other.y+other.h,isTop:false,center:false},{pos:other.y+other.h/2,isTop:null,center:true});
-    vEdges.push({pos:other.x,isLeft:true,center:false},{pos:other.x+other.w,isLeft:false,center:false},{pos:other.x+other.w/2,isLeft:null,center:true});
-  });
-
-  let bestDX = SNAP_THRESHOLD+1, bestDY = SNAP_THRESHOLD+1;
-
-  // Vertical snap (x axis) — check left edge, right edge, center
-  vEdges.forEach(({pos,center}) => {
-    const tests = [
-      {val:rawX,         snapTo:pos},        // left→pos
-      {val:r,            snapTo:pos},         // right→pos
-      {val:cX,           snapTo:pos},         // center→pos
-    ];
-    tests.forEach(({val,snapTo}) => {
-      const d = Math.abs(val - snapTo);
-      if(d < SNAP_THRESHOLD && d < bestDX) {
-        bestDX = d;
-        if(val===rawX)      snappedX = snapTo;
-        else if(val===r)    snappedX = snapTo - el.w;
-        else                snappedX = snapTo - el.w/2;
-        lines.push({type:'v', pos:snapTo, center});
-      }
-    });
-  });
-
-  // Horizontal snap (y axis)
-  hEdges.forEach(({pos,center}) => {
-    const tests = [
-      {val:rawY,   snapTo:pos},
-      {val:b,      snapTo:pos},
-      {val:cY,     snapTo:pos},
-    ];
-    tests.forEach(({val,snapTo}) => {
-      const d = Math.abs(val - snapTo);
-      if(d < SNAP_THRESHOLD && d < bestDY) {
-        bestDY = d;
-        if(val===rawY)     snappedY = snapTo;
-        else if(val===b)   snappedY = snapTo - el.h;
-        else               snappedY = snapTo - el.h/2;
-        lines.push({type:'h', pos:snapTo, center});
-      }
-    });
-  });
-
-  return {x:Math.round(snappedX), y:Math.round(snappedY), lines};
-}
-
 // ─── DRAG ────────────────────────────────────────────────────────────────────
 function startDrag(e,id) {
   dragging=true;dragEl=id;
@@ -1021,17 +722,35 @@ function startResize(e) {
 document.addEventListener('mousemove',e=>{
   const rect=canvas.getBoundingClientRect();
   const mx=(e.clientX-rect.left)/scale, my=(e.clientY-rect.top)/scale;
-
   if(dragging&&dragEl){
     const el=elements.find(x=>x.id===dragEl);if(!el)return;
-    const rawX=mx-dragOX, rawY=my-dragOY;
-    const {x,y,lines}=getSnapResult(el,rawX,rawY);
-    el.x=x; el.y=y;
+    let nx=Math.round(mx-dragOX), ny=Math.round(my-dragOY);
+    // Snap to grid (20px)
+    const GRID=20, THRESH=10;
+    nx=Math.round(nx/GRID)*GRID; ny=Math.round(ny/GRID)*GRID;
+    // Snap to canvas edges
+    if(Math.abs(nx)<THRESH) nx=0;
+    if(Math.abs(ny)<THRESH) ny=0;
+    if(Math.abs(nx+el.w-1080)<THRESH) nx=1080-el.w;
+    if(Math.abs(ny+el.h-1920)<THRESH) ny=1920-el.h;
+    // Snap to other elements
+    elements.forEach(other=>{
+      if(other.id===dragEl) return;
+      // left/right edges
+      if(Math.abs(nx-other.x)<THRESH) nx=other.x;
+      if(Math.abs(nx-(other.x+other.w))<THRESH) nx=other.x+other.w;
+      if(Math.abs(nx+el.w-other.x)<THRESH) nx=other.x-el.w;
+      if(Math.abs(nx+el.w-(other.x+other.w))<THRESH) nx=other.x+other.w-el.w;
+      // top/bottom edges
+      if(Math.abs(ny-other.y)<THRESH) ny=other.y;
+      if(Math.abs(ny-(other.y+other.h))<THRESH) ny=other.y+other.h;
+      if(Math.abs(ny+el.h-other.y)<THRESH) ny=other.y-el.h;
+      if(Math.abs(ny+el.h-(other.y+other.h))<THRESH) ny=other.y+other.h-el.h;
+    });
+    el.x=nx; el.y=ny;
     const div=document.getElementById(`el-${dragEl}`);
     if(div){div.style.left=el.x+'px';div.style.top=el.y+'px';}
-    showSnapLines(lines);
   }
-
   if(resizing&&resizeEl){
     const el=elements.find(x=>x.id===resizeEl);if(!el)return;
     const dx=mx-resizeStartX,dy=my-resizeStartY,d=resizeDir,MIN=40;
@@ -1042,182 +761,210 @@ document.addEventListener('mousemove',e=>{
     el.x=Math.round(el.x);el.y=Math.round(el.y);el.w=Math.round(el.w);el.h=Math.round(el.h);
     const div=document.getElementById(`el-${el.id}`);
     if(div){div.style.left=el.x+'px';div.style.top=el.y+'px';div.style.width=el.w+'px';div.style.height=el.h+'px';}
-    clearSnapLines();
   }
 });
+document.addEventListener('mouseup',()=>{dragging=false;dragEl=null;resizing=false;resizeEl=null;});
 
-document.addEventListener('mouseup',()=>{
-  dragging=false;dragEl=null;
-  resizing=false;resizeEl=null;
-  // keep snap lines briefly then clear
-  setTimeout(clearSnapLines, 600);
-});
+// ─── SOCIAL BAR ───────────────────────────────────────────────────────────────
+const SOCIAL_ICONS = {'Instagram':'📸','TikTok':'🎵','YouTube':'▶️','Facebook':'👤','Twitter/X':'𝕏','Twitch':'🎮','Discord':'💬','Snapchat':'👻','Pinterest':'📌','LinkedIn':'💼','Custom':'⭐'};
+// Default platform icon URLs (same as social_media_bar.html originals)
+const SOCIAL_ICON_URLS = {
+  'YouTube':   'https://i.ibb.co/4gMHtKWw/f03f9c0b47dc.png',
+  'Instagram': 'https://i.ibb.co/xSS0wbQS/73cce7499c3a.png',
+  'TikTok':    'https://i.ibb.co/ZpJV0SP7/a17feac1824d.png',
+};
 
-// ─── TICKER FONT PICKER ───────────────────────────────────────────────────────
-let tickerFontFilter='all', tickerFontSearch='';
+let socialSlots = [
+  {id:1, platform:'YouTube',   handle:'@yourchannel', iconUrl: SOCIAL_ICON_URLS['YouTube'],   imageData:null, accentColor:'#FF0000', iconScale:1.0},
+  {id:2, platform:'Instagram', handle:'@yourstore',   iconUrl: SOCIAL_ICON_URLS['Instagram'], imageData:null, accentColor:'#E1306C', iconScale:1.0},
+  {id:3, platform:'TikTok',    handle:'@yourstore',   iconUrl: SOCIAL_ICON_URLS['TikTok'],    imageData:null, accentColor:'#69C9D0', iconScale:1.0},
+];
+let socialSlotCounter = 3;
+let socialBarVisible = true;
+let socialIconSize = 90;
+let socialGap = 32;
 
-function buildTickerFontDropdown(list){
-  const dd=document.getElementById('ticker-font-dropdown');
-  dd.innerHTML=list.map(f=>
-    `<div class="font-option" style="font-family:'${f.name}',sans-serif;" onclick="selectTickerFont('${f.name}')" data-font="${f.name}">
-      <span style="font-family:'${f.name}',sans-serif;font-size:15px;">${f.name}</span>
-      <span style="font-size:9px;color:var(--muted);font-family:'Segoe UI';">${f.cat}</span>
-    </div>`
-  ).join('');
+function addSocialSlot() {
+  if(socialSlots.length >= 4) { alert('Maximum 4 slots!'); return; }
+  socialSlotCounter++;
+  socialSlots.push({id:socialSlotCounter, platform:'Custom', handle:'@handle', iconUrl:'', imageData:null, accentColor:'#ffffff', iconScale:1.0});
+  renderSocialSidebar();
+  updateSocialBar();
 }
 
-function filterTickerFonts(cat,el){
-  tickerFontFilter=cat;
-  document.querySelectorAll('.ticker-font-cats .font-cat').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  renderTickerFontList();
+function removeSocialSlot(id) {
+  socialSlots = socialSlots.filter(s=>s.id!==id);
+  renderSocialSidebar();
+  updateSocialBar();
 }
 
-function filterTickerFontSearch(q){
-  tickerFontSearch=q.toLowerCase();
-  renderTickerFontList();
-  openTickerFontDd();
+function renderSocialSidebar() {
+  const list = document.getElementById('social-slots-list');
+  list.innerHTML = socialSlots.map(slot => {
+    const scaleVal = Math.round((slot.iconScale||1.0)*100);
+    return `
+    <div style="background:#0d0d1a;border:1px solid var(--border);border-radius:7px;padding:9px;margin-bottom:7px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+        <span style="font-size:10px;font-weight:700;color:var(--gold);">SLOT ${slot.id}</span>
+        <button onclick="removeSocialSlot(${slot.id})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;" title="Entfernen">✕</button>
+      </div>
+      <div class="prop-row"><label>Plattform</label>
+        <select onchange="setSocialPlatform(${slot.id},this.value)" style="width:100%;background:#0d0d1a;border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;">
+          ${Object.keys(SOCIAL_ICONS).map(p=>`<option value="${p}"${p===slot.platform?' selected':''}>${p}</option>`).join('')}
+        </select>
+      </div>
+      <div class="prop-row"><label>Handle / Benutzername</label>
+        <input type="text" value="${slot.handle}" oninput="setSocialHandle(${slot.id},this.value)" style="width:100%;background:#0d0d1a;border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;">
+      </div>
+      <div class="prop-row"><label>Icon-Größe <span style="color:var(--accent);float:right;" id="scale-val-${slot.id}">${scaleVal}%</span></label>
+        <input type="range" min="50" max="200" value="${scaleVal}" oninput="setSocialIconScale(${slot.id},this.value,this)" style="width:100%;accent-color:var(--accent);">
+      </div>
+      <div class="prop-row"><label>Icon-URL <span style="color:var(--muted);font-size:9px;">(ibb.co oder direkte URL)</span></label>
+        <input type="text" value="${slot.iconUrl||''}" placeholder="https://i.ibb.co/..." oninput="setSocialIconUrl(${slot.id},this.value)" style="width:100%;background:#0d0d1a;border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:10px;">
+      </div>
+      <div class="prop-row"><label>— ODER Icon hochladen —</label>
+        <div class="img-upload-zone" style="position:relative;">
+          <input type="file" accept="image/*" onchange="setSocialImage(${slot.id},event)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+          <span style="font-size:16px;">📁</span>
+          <span style="font-size:10px;color:var(--muted);display:block;">${slot.imageData?'Bild geladen – klicken zum Ersetzen':'Klicken zum Hochladen'}</span>
+        </div>
+        ${slot.imageData?`<button onclick="clearSocialImage(${slot.id})" style="font-size:10px;color:var(--accent);background:none;border:none;cursor:pointer;margin-top:3px;">✕ Bild entfernen</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function renderTickerFontList(){
-  let list=FONTS;
-  if(tickerFontFilter!=='all') list=list.filter(f=>f.cat===tickerFontFilter);
-  if(tickerFontSearch) list=list.filter(f=>f.name.toLowerCase().includes(tickerFontSearch));
-  buildTickerFontDropdown(list);
-  const cur=document.getElementById('ticker-font').value;
-  document.querySelectorAll('#ticker-font-dropdown .font-option').forEach(o=>o.classList.toggle('active',o.dataset.font===cur));
-}
-
-function openTickerFontDd(){ document.getElementById('ticker-font-dropdown').classList.add('open'); }
-function closeTickerFontDdDelayed(){ setTimeout(()=>document.getElementById('ticker-font-dropdown').classList.remove('open'),200); }
-
-function selectTickerFont(name){
-  document.getElementById('ticker-font').value=name;
-  document.getElementById('ticker-font-search').value=name;
-  const prev=document.getElementById('ticker-font-preview');
-  prev.style.fontFamily=`'${name}',sans-serif`;
-  prev.textContent=name+' — Aa Bb 123 🔥';
-  document.getElementById('ticker-font-dropdown').classList.remove('open');
-  document.querySelectorAll('#ticker-font-dropdown .font-option').forEach(o=>o.classList.toggle('active',o.dataset.font===name));
-  updateTicker();
-}
-
-function setTickerTextColor(c){document.getElementById('ticker-text-color').value=c;updateTicker();}
-
-function setTickerTransform(val,el){
-  document.querySelectorAll('#tt-none,#tt-upper,#tt-lower').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('ticker-inner').style.textTransform=val;
-  // store on hidden input
-  document.getElementById('ticker-inner').dataset.transform=val;
-  updateTicker();
-}
-
-function setLabelStyle(val,el){
-  document.querySelectorAll('#ls-rect,#ls-pill,#ls-none').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('ticker-label-style').value=val;
-  updateTicker();
-}
-
-function setTickerDir(val,el){
-  document.querySelectorAll('#dir-left,#dir-right').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('ticker-direction').value=val;
-  updateTicker();
-}
-
-function setTickerPos(val,el){
-  document.querySelectorAll('#pos-bottom,#pos-top').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('ticker-position').value=val;
-  const bar=document.getElementById('ticker-bar');
-  if(val==='top'){bar.style.bottom='auto';bar.style.top='0';bar.style.borderTop='none';bar.style.borderBottom=`${parseInt(document.getElementById('ticker-border-width').value)||3}px solid ${document.getElementById('ticker-border-color').value}`;}
-  else{bar.style.top='auto';bar.style.bottom='0';bar.style.borderBottom='none';}
-  updateTicker();
-}
-
-// ─── TICKER UPDATE ────────────────────────────────────────────────────────────
-function updateTicker(){
-  const lc=document.getElementById('ticker-label-color').value;
-  const ltc=document.getElementById('ticker-label-text-color').value;
-  const tc=document.getElementById('ticker-text-color').value;
-  const bg=document.getElementById('ticker-bg-color').value;
-  const text=document.getElementById('ticker-text').value;
-  const lt=document.getElementById('ticker-label-text').value;
-  const sep=document.getElementById('ticker-separator').value||'     ';
-  const font=document.getElementById('ticker-font').value||'Bebas Neue';
-  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
-  const fw=document.getElementById('ticker-fontweight').value||'700';
-  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
-  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
-  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
-  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
-  const bc=document.getElementById('ticker-border-color').value;
-  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
-  const pos=document.getElementById('ticker-position').value||'bottom';
-  const dir=document.getElementById('ticker-direction').value||'left';
-
-  // update val displays
-  document.getElementById('ticker-fontsize-val').textContent=fs+'px';
-  document.getElementById('ticker-spacing-val').textContent=ls+'px';
-  document.getElementById('ticker-border-width-val').textContent=bw+'px';
-  document.getElementById('ticker-label-fontsize-val').textContent=lfs+'px';
-
-  // Label
-  const lbl=document.getElementById('ticker-label');
-  lbl.textContent=lt;
-  lbl.style.background=lc;
-  lbl.style.color=ltc;
-  lbl.style.fontFamily=`'${font}',sans-serif`;
-  lbl.style.fontSize=lfs+'px';
-  if(labelStyle==='none'){lbl.style.display='none';}
-  else{lbl.style.display='flex'; lbl.style.borderRadius=labelStyle==='pill'?'0 20px 20px 0':'0';}
-
-  // Inner text
-  const inner=document.getElementById('ticker-inner');
-  const repeated=text+sep+text;
-  inner.textContent=repeated;
-  inner.style.color=tc;
-  inner.style.fontFamily=`'${font}',sans-serif`;
-  inner.style.fontSize=fs+'px';
-  inner.style.fontWeight=fw;
-  inner.style.letterSpacing=ls+'px';
-  inner.style.textTransform=transform;
-  // direction: reverse animation
-  const dur=parseFloat(document.getElementById('ticker-speed').value)||30;
-  inner.style.animationName='';
-  void inner.offsetWidth; // reflow
-  if(dir==='right'){
-    inner.style.animation=`ticker-scroll-right ${dur}s linear infinite`;
-  } else {
-    inner.style.animation=`ticker-scroll ${dur}s linear infinite`;
+function setSocialPlatform(id, val) {
+  const s=socialSlots.find(x=>x.id===id);
+  if(s){
+    s.platform=val;
+    // Auto-fill icon URL if we have a default for this platform
+    if(SOCIAL_ICON_URLS[val] && !s.imageData) s.iconUrl = SOCIAL_ICON_URLS[val];
   }
+  renderSocialSidebar();
+  updateSocialBar();
+}
+function setSocialHandle(id, val)  { const s=socialSlots.find(x=>x.id===id); if(s) s.handle=val; updateSocialBar(); }
+function setSocialAccent(id, val)  { const s=socialSlots.find(x=>x.id===id); if(s) s.accentColor=val; updateSocialBar(); }
+function setSocialIconUrl(id, val) { const s=socialSlots.find(x=>x.id===id); if(s){ s.iconUrl=val; s.imageData=null; } updateSocialBar(); }
+function setSocialIconScale(id, val, input) {
+  const s=socialSlots.find(x=>x.id===id);
+  if(s) s.iconScale = parseInt(val)/100;
+  const lbl = document.getElementById('scale-val-'+id);
+  if(lbl) lbl.textContent = val+'%';
+  updateSocialBar();
+}
+function setSocialImage(id, event) {
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{ const s=socialSlots.find(x=>x.id===id); if(s){s.imageData=e.target.result; s.iconUrl='';} renderSocialSidebar(); updateSocialBar(); };
+  reader.readAsDataURL(file); event.target.value='';
+}
+function clearSocialImage(id) { const s=socialSlots.find(x=>x.id===id); if(s){ s.imageData=null; s.iconUrl=SOCIAL_ICON_URLS[s.platform]||''; } renderSocialSidebar(); updateSocialBar(); }
 
-  // Bar
-  const bar=document.getElementById('ticker-bar');
-  bar.style.background=bg;
-  if(pos==='top'){
-    bar.style.top='0';bar.style.bottom='auto';
-    bar.style.borderTop='none';
-    bar.style.borderBottom=`${bw}px solid ${bc}`;
-  } else {
-    bar.style.bottom='0';bar.style.top='auto';
-    bar.style.borderBottom='none';
-    bar.style.borderTop=`${bw}px solid ${bc}`;
-  }
+// Build the capsule-badge style social bar HTML into barEl
+function buildSocialBarHTML(barEl) {
+  const textColor = document.getElementById('social-text-color').value;
+  const font = document.getElementById('social-font').value;
+  const badgeBg = document.getElementById('social-bg').value;
+  const h = parseInt(barEl.style.height) || 100;
+  const iconSz = socialIconSize;
+  const overlap = Math.round(iconSz * 0.30); // how much badge tucks behind icon
+  const badgePadL = overlap + 12;
+  const badgePadR = 20;
+  const badgePadV = Math.round(h * 0.1);
+  const fontSize = Math.round(iconSz * 0.27);
+
+  barEl.style.background = 'transparent';
+  barEl.style.gap = socialGap + 'px';
+
+  const parts = socialSlots.map(slot => {
+    const slotIconSz = Math.round(iconSz * (slot.iconScale||1.0));
+    const slotOverlap = Math.round(slotIconSz * 0.30);
+    const slotPadL = slotOverlap + 12;
+    const slotFontSize = Math.round(slotIconSz * 0.27);
+    const iconSrc = slot.imageData || slot.iconUrl;
+    const iconEl = iconSrc
+      ? `<img class="social-slot-icon-img" src="${iconSrc}" style="width:${slotIconSz}px;height:${slotIconSz}px;" alt="${slot.platform}">`
+      : `<div style="width:${slotIconSz}px;height:${slotIconSz}px;border-radius:50%;background:${slot.accentColor}33;display:flex;align-items:center;justify-content:center;font-size:${Math.round(slotIconSz*.45)}px;flex-shrink:0;z-index:2;filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.4));">${SOCIAL_ICONS[slot.platform]||'⭐'}</div>`;
+
+    return `<div class="social-slot">
+      ${iconEl}
+      <div class="social-slot-badge" style="background:${badgeBg};margin-left:-${slotOverlap}px;padding:${badgePadV}px ${badgePadR}px ${badgePadV}px ${slotPadL}px;">
+        <span class="social-slot-handle" style="font-family:'${font}',sans-serif;font-size:${slotFontSize}px;color:${textColor};">${slot.handle}</span>
+      </div>
+    </div>`;
+  });
+  barEl.innerHTML = parts.join('');
 }
 
-function updateTickerSpeed(el){
-  document.getElementById('ticker-speed-val').textContent=el.value+'s';
-  const inner=document.getElementById('ticker-inner');
-  const dir=document.getElementById('ticker-direction').value||'left';
-  inner.style.animation=`${dir==='right'?'ticker-scroll-right':'ticker-scroll'} ${el.value}s linear infinite`;
+function updateSocialBar() {
+  const barEl = document.getElementById('social-bar');
+  buildSocialBarHTML(barEl);
 }
 
-function updateTickerHeight(el){
-  document.getElementById('ticker-height-val').textContent=el.value+'px';
-  document.getElementById('ticker-bar').style.height=el.value+'px';
+function updateSocialHeight(input) {
+  document.getElementById('social-height-val').textContent = input.value+'px';
+  document.getElementById('social-bar').style.height = input.value+'px';
+  updateSocialBar();
+}
+
+function updateSocialIconSize(input) {
+  socialIconSize = parseInt(input.value);
+  document.getElementById('social-icon-val').textContent = input.value+'px';
+  updateSocialBar();
+}
+
+function updateSocialGap(input) {
+  socialGap = parseInt(input.value);
+  document.getElementById('social-gap-val').textContent = input.value+'px';
+  updateSocialBar();
+}
+
+function toggleSocialBar() {
+  const bar = document.getElementById('social-bar');
+  const btn = document.getElementById('social-toggle-btn');
+  socialBarVisible = !socialBarVisible;
+  bar.style.display = socialBarVisible ? 'flex' : 'none';
+  btn.textContent = socialBarVisible ? 'ON' : 'OFF';
+  btn.style.background = socialBarVisible ? 'rgba(230,57,70,.2)' : 'rgba(141,153,174,.15)';
+  btn.style.borderColor = socialBarVisible ? 'var(--accent)' : 'var(--muted)';
+  btn.style.color = socialBarVisible ? 'var(--accent)' : 'var(--muted)';
+}
+
+function downloadSocialBar() {
+  const textColor = document.getElementById('social-text-color').value;
+  const font = document.getElementById('social-font').value;
+  const badgeBg = document.getElementById('social-bg').value;
+  const h = parseInt(document.getElementById('social-bar').style.height)||100;
+  const iconSz = socialIconSize;
+  const overlap = Math.round(iconSz * 0.30);
+  const badgePadL = overlap + 12;
+  const badgePadR = 20;
+  const badgePadV = Math.round(h * 0.1);
+  const fontSize = Math.round(iconSz * 0.27);
+  const gap = socialGap;
+  const gf = `<link href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g,'+')}:wght@400;700;900&display=swap" rel="stylesheet">`;
+
+  const parts = socialSlots.map(slot => {
+    const slotIconSz = Math.round(iconSz * (slot.iconScale||1.0));
+    const slotOverlap = Math.round(slotIconSz * 0.30);
+    const slotPadL = slotOverlap + 12;
+    const slotFontSize = Math.round(slotIconSz * 0.27);
+    const iconSrc = slot.imageData || slot.iconUrl;
+    const iconEl = iconSrc
+      ? `<img src="${iconSrc}" style="width:${slotIconSz}px;height:${slotIconSz}px;object-fit:contain;z-index:2;filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.4));flex-shrink:0;" alt="${slot.platform}">`
+      : `<div style="width:${slotIconSz}px;height:${slotIconSz}px;border-radius:50%;background:${slot.accentColor}33;display:flex;align-items:center;justify-content:center;font-size:${Math.round(slotIconSz*.45)}px;flex-shrink:0;z-index:2;">${SOCIAL_ICONS[slot.platform]||'⭐'}</div>`;
+    return `<div style="display:flex;align-items:center;position:relative;flex-shrink:0;">
+      ${iconEl}
+      <div style="background:${badgeBg};padding:${badgePadV}px ${badgePadR}px ${badgePadV}px ${slotPadL}px;margin-left:-${slotOverlap}px;border-radius:0 30px 30px 0;z-index:1;box-shadow:0 4px 10px rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.1);display:flex;align-items:center;">
+        <span style="color:${textColor};font-family:'${font}',sans-serif;font-size:${slotFontSize}px;font-weight:700;letter-spacing:0.5px;white-space:nowrap;">${slot.handle}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gf}<style>*{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:${h}px;overflow:hidden;background:transparent;display:flex;align-items:center;justify-content:center;gap:${gap}px;}</style></head><body>${parts}</body></html>`;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='stream-social-bar.html';a.click();
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -1238,21 +985,20 @@ function buildElementHTML(el) {
   const ta=`text-align:${el.textAlign||'center'};`;
   let inner='';
   if(el.type==='cam'){
-    const labelBar = el.label ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.65);padding:8px 14px;${ff}${fs}${fw}${ta}color:${el.textColor};z-index:2;">${el.label}</div>` : '';
     if(el.imageData){
-      inner=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">${labelBar}`;
+      inner=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">`;
     } else {
-      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;opacity:.2;">📷</div>${labelBar}`;
+      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;opacity:.15;">📷</div>`;
+    }
+  } else if(el.type==='adzone'){
+    if(el.imageData){
+      inner=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'contain'};">`;
+    } else {
+      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.3;">📐</div>`;
     }
   } else if(el.type==='image'){
-    const imgOpacity=(el.imgOpacity!==undefined?el.imgOpacity:100)/100;
-    const blend=el.blendMode||'normal';
-    if(el.imageData){
-      // transparent wrapper — let PNG alpha channel show through naturally
-      return `<div style="position:absolute;left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;border-radius:${el.radius}px;overflow:hidden;opacity:${el.opacity/100};background:transparent;${el.borderWidth>0?`border:${el.borderWidth}px solid ${el.frameColor};`:''}"><img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};opacity:${imgOpacity};mix-blend-mode:${blend};display:block;"></div>`;
-    } else {
-      inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.2;">🖼️</div>`;
-    }
+    if(el.imageData){inner=`<img src="${el.imageData}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${el.fit||'cover'};">`;}
+    else inner=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.2;">🖼️</div>`;
   } else if(el.type==='ad'){
     inner=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;height:100%;padding:20px;">
 <div style="${ff}font-size:14px;font-weight:800;letter-spacing:2px;color:${el.frameColor};">⚡ SPECIAL OFFER</div>
@@ -1271,7 +1017,7 @@ function buildElementHTML(el) {
   } else if(el.type==='frame'){
     inner=`<div style="${ff}${fs}${ta}color:rgba(255,255,255,.15);">${el.label||''}</div>`;
   }
-  return `<div style="width:${el.w}px;height:${el.h}px;background:${el.bg};${bs}border-radius:${el.radius}px;position:relative;overflow:hidden;opacity:${el.opacity/100};">${inner}</div>`;
+  return `<div style="width:${el.w}px;height:${el.h}px;background:${el.type==='adzone'?'transparent':el.bg};${el.type==='adzone'?'':bs}border-radius:${el.radius}px;position:relative;overflow:hidden;opacity:${el.opacity/100};">${inner}</div>`;
 }
 
 function downloadSelected(){
@@ -1291,138 +1037,62 @@ function downloadAllElements(){
   },i*350));
 }
 
-function downloadTicker(){
-  const lt=document.getElementById('ticker-label-text').value;
-  const text=document.getElementById('ticker-text').value;
-  const sep=document.getElementById('ticker-separator').value||'     ';
-  const lc=document.getElementById('ticker-label-color').value;
-  const ltc=document.getElementById('ticker-label-text-color').value;
-  const tc=document.getElementById('ticker-text-color').value;
-  const bg=document.getElementById('ticker-bg-color').value;
-  const h=parseInt(document.getElementById('ticker-height').value)||36;
-  const font=document.getElementById('ticker-font').value||'Bebas Neue';
-  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
-  const fw=document.getElementById('ticker-fontweight').value||'700';
-  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
-  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
-  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
-  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
-  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
-  const bc=document.getElementById('ticker-border-color').value;
-  const dir=document.getElementById('ticker-direction').value||'left';
-  const pos=document.getElementById('ticker-position').value||'bottom';
-  const dur=parseInt(document.getElementById('ticker-speed').value)||30;
-  const gf=`<link href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g,'+')}:wght@400;700;900&display=swap" rel="stylesheet">`;
-  const repeated=text+sep+text;
-  const borderCss=pos==='top'?`border-bottom:${bw}px solid ${bc};`:`border-top:${bw}px solid ${bc};`;
-  const animDir=dir==='right'?'ticker-right':'ticker-left';
-  const labelRadius=labelStyle==='pill'?'0 20px 20px 0':'0';
-  const labelDisplay=labelStyle==='none'?'display:none;':'';
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gf}<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{width:1080px;height:${h}px;overflow:hidden;font-family:'${font}',sans-serif;}
-#bar{display:flex;align-items:center;height:100%;background:${bg};${borderCss}}
-#lbl{background:${lc};color:${ltc};padding:0 18px;font-size:${lfs}px;font-weight:${fw};white-space:nowrap;height:100%;display:flex;align-items:center;font-family:'${font}',sans-serif;letter-spacing:1px;border-radius:${labelRadius};flex-shrink:0;${labelDisplay}}
-#track{flex:1;overflow:hidden;position:relative;height:100%;}
-#inner{position:absolute;white-space:nowrap;display:flex;align-items:center;height:100%;animation:${animDir} ${dur}s linear infinite;font-size:${fs}px;font-weight:${fw};color:${tc};font-family:'${font}',sans-serif;letter-spacing:${ls}px;text-transform:${transform};padding-left:30px;}
-@keyframes ticker-left{0%{transform:translateX(1080px)}100%{transform:translateX(-100%)}}
-@keyframes ticker-right{0%{transform:translateX(-100%)}100%{transform:translateX(1080px)}}
-</style></head><body>
-<div id="bar"><div id="lbl">${lt}</div><div id="track"><div id="inner">${repeated}</div></div></div>
-</body></html>`;
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='stream-ticker.html';a.click();
-}
-
 function downloadFull(){
   deselectAll();
-  const lt=document.getElementById('ticker-label-text').value;
-  const tt=document.getElementById('ticker-text').value;
-  const sep=document.getElementById('ticker-separator').value||'     ';
-  const lc=document.getElementById('ticker-label-color').value;
-  const ltc=document.getElementById('ticker-label-text-color').value;
-  const tc=document.getElementById('ticker-text-color').value;
-  const bg=document.getElementById('ticker-bg-color').value;
-  const th=parseInt(document.getElementById('ticker-height').value)||36;
-  const tickerFont=document.getElementById('ticker-font').value||'Bebas Neue';
-  const fs=parseInt(document.getElementById('ticker-fontsize').value)||15;
-  const fw=document.getElementById('ticker-fontweight').value||'700';
-  const ls=parseFloat(document.getElementById('ticker-spacing').value)||0;
-  const transform=document.getElementById('ticker-inner').dataset.transform||'none';
-  const labelStyle=document.getElementById('ticker-label-style').value||'rect';
-  const lfs=parseInt(document.getElementById('ticker-label-fontsize').value)||14;
-  const bw=parseInt(document.getElementById('ticker-border-width').value)||3;
-  const bc=document.getElementById('ticker-border-color').value;
-  const dir=document.getElementById('ticker-direction').value||'left';
-  const pos=document.getElementById('ticker-position').value||'bottom';
-  const dur=parseInt(document.getElementById('ticker-speed').value)||30;
   const canvasBg=document.getElementById('canvas-bg-color').value;
-  const repeated=tt+sep+tt;
-  const borderCss=pos==='top'?`border-bottom:${bw}px solid ${bc};`:`border-top:${bw}px solid ${bc};`;
-  const posCss=pos==='top'?'top:0;bottom:auto;':'bottom:0;top:auto;';
-  const animDir=dir==='right'?'ticker-right':'ticker-left';
-  const labelRadius=labelStyle==='pill'?'0 20px 20px 0':'0';
-  const labelDisplay=labelStyle==='none'?'display:none;':'';
   const elsHTML=elements.map(el=>`<div style="position:absolute;left:${el.x}px;top:${el.y}px;">${buildElementHTML(el)}</div>`).join('\n');
   const gfLink=`<link href="${googleFontsLink()}" rel="stylesheet">`;
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gfLink}<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{width:1080px;height:1920px;overflow:hidden;background:${canvasBg};position:relative;}
-#tb{position:absolute;${posCss}left:0;right:0;height:${th}px;display:flex;align-items:center;overflow:hidden;${borderCss}background:${bg};z-index:50;}
-#tlbl{background:${lc};color:${ltc};padding:0 18px;font-size:${lfs}px;font-weight:${fw};white-space:nowrap;height:100%;display:flex;align-items:center;font-family:'${tickerFont}',sans-serif;letter-spacing:1px;border-radius:${labelRadius};flex-shrink:0;${labelDisplay}}
-#ttrack{flex:1;overflow:hidden;position:relative;height:100%;}
-#tinner{position:absolute;white-space:nowrap;display:flex;align-items:center;height:100%;animation:${animDir} ${dur}s linear infinite;font-size:${fs}px;font-weight:${fw};color:${tc};font-family:'${tickerFont}',sans-serif;letter-spacing:${ls}px;text-transform:${transform};padding-left:40px;}
-@keyframes ticker-left{0%{transform:translateX(1080px)}100%{transform:translateX(-100%)}}
-@keyframes ticker-right{0%{transform:translateX(-100%)}100%{transform:translateX(1080px)}}
-</style></head><body>${elsHTML}
-<div id="tb"><div id="tlbl">${lt}</div><div id="ttrack"><div id="tinner">${repeated}</div></div></div>
-</body></html>`;
+
+  // Build social bar HTML inline (capsule-badge style)
+  const badgeBg = document.getElementById('social-bg').value;
+  const textColor = document.getElementById('social-text-color').value;
+  const font = document.getElementById('social-font').value;
+  const h = parseInt(document.getElementById('social-bar').style.height)||100;
+  const iconSz = socialIconSize;
+  const gap = socialGap;
+  const overlap = Math.round(iconSz * 0.30);
+  const badgePadL = overlap + 12;
+  const badgePadR = 20;
+  const badgePadV = Math.round(h * 0.1);
+  const fontSize = Math.round(iconSz * 0.27);
+  const barVisible = socialBarVisible;
+  const parts = socialSlots.map(slot => {
+    const iconSrc = slot.imageData || slot.iconUrl;
+    const iconEl = iconSrc
+      ? `<img src="${iconSrc}" style="width:${iconSz}px;height:${iconSz}px;object-fit:contain;z-index:2;filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.4));flex-shrink:0;" alt="${slot.platform}">`
+      : `<div style="width:${iconSz}px;height:${iconSz}px;border-radius:50%;background:${slot.accentColor}33;display:flex;align-items:center;justify-content:center;font-size:${Math.round(iconSz*.45)}px;flex-shrink:0;z-index:2;">${SOCIAL_ICONS[slot.platform]||'⭐'}</div>`;
+    return `<div style="display:flex;align-items:center;position:relative;flex-shrink:0;">
+      ${iconEl}
+      <div style="background:${badgeBg};padding:${badgePadV}px ${badgePadR}px ${badgePadV}px ${badgePadL}px;margin-left:-${overlap}px;border-radius:0 30px 30px 0;z-index:1;box-shadow:0 4px 10px rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.1);display:flex;align-items:center;">
+        <span style="color:${textColor};font-family:'${font}',sans-serif;font-size:${fontSize}px;font-weight:700;letter-spacing:0.5px;white-space:nowrap;">${slot.handle}</span>
+      </div>
+    </div>`;
+  }).join('');
+  const socialHTML = barVisible ? `<div style="position:absolute;bottom:0;left:0;right:0;height:${h}px;display:flex;align-items:center;justify-content:center;gap:${gap}px;overflow:hidden;z-index:50;background:transparent;">${parts}</div>` : '';
+
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">${gfLink}<style>*{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:1920px;overflow:hidden;background:${canvasBg};position:relative;}</style></head><body>${elsHTML}${socialHTML}</body></html>`;
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='ebay-stream-1080x1920.html';a.click();
 }
 
 // ─── DEFAULT LAYOUT ───────────────────────────────────────────────────────────
 window.addEventListener('load',()=>{
-  buildTickerFontDropdown(FONTS);
-  renderTickerFontList();
-  // init ticker font preview
-  const initTickerFont='Bebas Neue';
-  const tfPrev=document.getElementById('ticker-font-preview');
-  tfPrev.style.fontFamily=`'${initTickerFont}',sans-serif`;
-  tfPrev.textContent=initTickerFont+' — Aa Bb 123 🔥';
-  document.getElementById('ticker-font-search').value=initTickerFont;
+  buildSocialFontSelect();
   buildFontDropdown(FONTS);
+  renderSocialSidebar();
+  updateSocialBar();
 
   setTimeout(()=>{
-    // Top ad banner
-    const adEl=templates.ad(++elCounter,40,40,1000,180);
-    adEl.label="🔥 TODAY'S TOP DEAL — BID NOW!";adEl.frameColor='#ffd166';adEl.borderWidth=8;adEl.radius=12;
-    adEl.font='Oswald';adEl.fontSize=46;
-    elements.push(adEl);renderElement(adEl);
-
-    // Divider
-    const fEl={id:++elCounter,type:'frame',x:0,y:238,w:1080,h:8,label:'',bg:'#e63946',frameColor:'#e63946',borderWidth:0,textColor:'#fff',opacity:100,radius:0,font:'Bebas Neue',fontSize:14,fontWeight:900,textAlign:'center'};
-    elements.push(fEl);renderElement(fEl);
-
-    // Camera 1
-    const c1=templates.cam(++elCounter,40,262);c1.w=480;c1.h=560;c1.label='';c1.frameColor='#e63946';c1.borderWidth=10;c1.font='Bebas Neue';c1.fontSize=26;camCount++;
+    // Camera 1 — no border, no label
+    const c1=templates.cam(++elCounter,40,60);c1.w=480;c1.h=560;c1.label='';c1.frameColor='#000000';c1.borderWidth=0;c1.font='Bebas Neue';c1.fontSize=26;camCount++;
     elements.push(c1);renderElement(c1);
 
-    // Camera 2
-    const c2=templates.cam(++elCounter,560,262);c2.w=480;c2.h=560;c2.label='';c2.frameColor='#3a86ff';c2.borderWidth=10;c2.font='Bebas Neue';c2.fontSize=26;camCount++;
+    // Camera 2 — no border, no label
+    const c2=templates.cam(++elCounter,560,60);c2.w=480;c2.h=560;c2.label='';c2.frameColor='#000000';c2.borderWidth=0;c2.font='Bebas Neue';c2.fontSize=26;camCount++;
     elements.push(c2);renderElement(c2);
 
-    // Divider 2
-    const f2={id:++elCounter,type:'frame',x:0,y:840,w:1080,h:8,label:'',bg:'#ffd166',frameColor:'#ffd166',borderWidth:0,textColor:'#fff',opacity:100,radius:0,font:'Bebas Neue',fontSize:14,fontWeight:900,textAlign:'center'};
-    elements.push(f2);renderElement(f2);
-
-    // Spotlight ad
-    const ad2=templates.ad(++elCounter,40,870,1000,280);
-    ad2.label='🎯 ITEM SPOTLIGHT';ad2.sub='Starting at $9.99 · Free Shipping';
-    ad2.frameColor='#2ec4b6';ad2.borderWidth=6;ad2.radius=14;ad2.font='Kanit';ad2.fontSize=54;
-    elements.push(ad2);renderElement(ad2);
-
-    // Logo
-    const lg=templates.logo(++elCounter);lg.x=40;lg.y=1780;lg.w=460;lg.h=100;lg.font='Bebas Neue';
-    elements.push(lg);renderElement(lg);
+    // Ad zone — separate from image/photo area
+    const az=templates.adzone(++elCounter,340,700,400,400);
+    elements.push(az);renderElement(az);
 
     deselectAll();
   },100);
